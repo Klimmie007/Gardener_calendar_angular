@@ -1,0 +1,20 @@
+<table>
+    <tbody>
+        <tr>
+            <th *ngFor="let day of this.daysOfWeek">
+                {{day}}
+            </th>
+        </tr>
+        <tr *ngFor="let week of [].constructor(Weeks), let i = index">
+            <td *ngFor="let day of [].constructor(7), let j = index">
+                <ng-template [ngIf]="((i === 0 && j < StartDay) || i*7+j > Days.length)" [ngIfElse]="properDay">
+                    
+                </ng-template>
+                <ng-template #properDay>
+                    <app-day [Day]="this.Days[i*7+j-StartDay]"></app-day>    
+                </ng-template>
+            </td>
+        
+        </tr>
+    </tbody>
+</table>

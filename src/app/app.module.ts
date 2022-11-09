@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { DayComponent } from './day/day.component';
 import { PlantComponent } from './plant/plant.component';
 import { MonthComponent } from './month/month.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DayComponent,
     PlantComponent,
-    MonthComponent
+    MonthComponent,
+    RegisterComponent
   ],
   imports: [
     FormsModule,

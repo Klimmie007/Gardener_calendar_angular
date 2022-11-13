@@ -1,1 +1,5 @@
 <app-month [FirstDay]="1" [TotalDays]=30></app-month>
+<button (click)="loadPreserveComponent();">Define Preserve</button>
+<div *ngIf="loadComponent">
+  <app-preserve></app-preserve>
+</div>

@@ -21,7 +21,6 @@ router.get('/', (req, res) => {
 
 router.post('/register', (req, res) => {
     let userData = req.body
-    console.log(userData)
     let user = new User(userData)
     User.findOne({$or: [{email: user.email}, {nickname: user.nickname}]}, (error, userFound) =>{
         if(error){
@@ -79,12 +78,21 @@ router.post('/login', (req, res) => {
         }
         else
         {
-            if(!user || !bcrypt.compare(user.password, userData.password, (error, result) => {console.log("the login " + (result ? "succeeded" : "failed"))})){
-                res.status(401).send('Invalid data')
+            if(!user){
+                res.status(401).send('No user with specified email exists')
             }
             else
             {
-                res.status(200).send(user)
+                bcrypt.compare(userData.password, user.password, (error, result) => {
+                    if(error)
+                    {
+                        console.log(error)
+                    }
+                    else
+                    {
+                        res.status(200).send(user)
+                    }
+                })
             }
         }
     })

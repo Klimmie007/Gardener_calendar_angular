@@ -10,18 +10,16 @@ import { User } from '../_models/user';
   selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [Backend, AuthService],
+  providers: [AuthService],
 })
 export class RegisterComponent implements OnInit {
   private password: string = "";
   private email: string = "";
   private nickname: string = "";
-  private backend: Backend;
   private router: Router;
   private auth: AuthService;
-  constructor(backend: Backend, router: Router, auth: AuthService) {
+  constructor(router: Router, auth: AuthService) {
     this.router = router;
-    this.backend = backend;
     this.auth = auth;
   }
 
@@ -64,7 +62,6 @@ export class RegisterComponent implements OnInit {
   public onSubmit()
   {
     let user: User = new User(this.email, this.nickname, this.password)
-    console.log(user.toJSON())
     this.auth.registerUser(user.toJSON()).subscribe(
       res => console.log(res),
       err => console.log(err)

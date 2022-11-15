@@ -1,17 +1,28 @@
+import { createInjectableType } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { AppRoutingModule } from '../app-routing.module';
+import { AuthService } from '../auth.service';
+import { Backend } from '../backend';
 import { User } from '../_models/user';
 
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [Backend, AuthService],
 })
 export class RegisterComponent implements OnInit {
-  private static emailRegex: RegExp = new RegExp("^[a-zA-Z0-9\-_]+@[a-zA-Z0-9.\-_]+\.[a-z]{2,4}$");
   private password: string = "";
   private email: string = "";
   private nickname: string = "";
-  constructor() { 
+  private backend: Backend;
+  private router: Router;
+  private auth: AuthService;
+  constructor(backend: Backend, router: Router, auth: AuthService) {
+    this.router = router;
+    this.backend = backend;
+    this.auth = auth;
   }
 
   ngOnInit(): void {
@@ -45,9 +56,19 @@ export class RegisterComponent implements OnInit {
   }
   public get IsEmailValid() : boolean
   {
-    let tmp: number | undefined = this.email.match(RegisterComponent.emailRegex)?.length;
+    let tmp: RegExpMatchArray | null = this.email.match(/^[a-zA-Z0-9\-_]+@[a-zA-Z0-9.\-_]+\.[a-z]{2,4}$/g); 
     if(tmp == undefined)
-      return false
-    return tmp > 0;
+      return false;
+    return tmp.length > 0;
+  }
+  public onSubmit()
+  {
+    let user: User = new User(this.email, this.nickname, this.password)
+    console.log(user.toJSON())
+    this.auth.registerUser(user.toJSON()).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
+    //this.router.navigate(['/account']);
   }
 }

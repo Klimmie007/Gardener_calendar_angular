@@ -1,13 +1,13 @@
 <div class="container">
     <h1>User Registration</h1>
 
-    <form>
+    <form (ngSubmit)="this.onSubmit()">
 
         <div class="form-group">
 
             <label for="nickname">Nickname</label><br>
 
-            <input type="text" name="nickname" class = "form-control" ng-model="Nickname" ng-model-options="{ getterSetter: true }" >
+            <input type="text" name="nickname" [(ngModel)]="Nickname" ng-model-options="{ getterSetter: true }" >
 
         </div>
 
@@ -17,8 +17,7 @@
 
             <label for="email">Email</label><br>
 
-            <input type="text" name="email" class="form-control" ng-model="Email" ng-model-options="{ getterSetter: true }" >
-            <p>{{this.IsEmailValid}}</p>
+            <input type="text" name="email" class="form-control" [(ngModel)]="Email" ng-model-options="{ getterSetter: true }" >
             <div class="error" *ngIf="!this.IsEmailValid">Email is not valid</div>
         </div>
 
@@ -28,7 +27,7 @@
 
             <label for="password">Password</label><br>
 
-            <input type="text" name="password" class = "form-control" ng-model="Password" ng-model-options="{ getterSetter: true }">
+            <input type="text" name="password" [(ngModel)]="Password" ng-model-options="{ getterSetter: true }">
 
         </div>
 

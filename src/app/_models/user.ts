@@ -1,5 +1,3 @@
-
-import * as bcrypt from "bcrypt"
 export class User
 {
     
@@ -7,23 +5,28 @@ export class User
     private static count: number = 0;
     private email: string;
     private nickname: string;
-    private password? : string;
-    private hashedPassword?: string;
+    private password?: string;
     private id?: number;
-    private isConfirmed: boolean;
+    //private isConfirmed: boolean;
     constructor(email: string, nickname: string, password: string)
     {
-        
-        this.isConfirmed = true;
+        //this.isConfirmed = true;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
-        this.hashedPassword = bcrypt.hashSync(password, 10);
     }
-    public get LoginSuccessful() : boolean
+    public LoginSuccessful(password: string) : boolean
     {
-        if(this.password == null || this.hashedPassword == null)
+        if(password == null || this.password == null)
             return false;
-        return bcrypt.compareSync(this.password, this.hashedPassword);
+        return password == this.password;
+    }
+    public get Email(): string
+    {
+        return this.email;
+    }
+    public toJSON(): Object
+    {
+        return {email: this.Email, nickname: this.nickname, password: this.password}
     }
 }

@@ -1,5 +1,6 @@
 <div>
-  <button (click)="loadDefinePreserveComponent();">Define Preserve</button>
+  <button *ngIf="!loadComponent" (click)="loadDefinePreserveComponent();">Define Preserve</button>
+  <button *ngIf="loadComponent" (click)="loadDefinePreserveComponent();">Hide</button>
   <div *ngIf="loadComponent">
     <app-define-preserve></app-define-preserve>
   </div>

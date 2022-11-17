@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Preserve } from '../_models/preserve';
+import { FormGroup, NgForm } from '@angular/forms';
+import { Preserve, preserves } from '../_models/preserve';
 
 @Component({
   selector: 'app-define-preserve',
@@ -26,5 +27,10 @@ export class DefinePreserveComponent implements OnInit {
     this.dateOfProduction = new Date(dateString);
     let dateString1 = formData[7] + '-' + formData[6] + '-' + formData[5];
     this.expirationDate = new Date(dateString1);
+    preserves.push(new Preserve(this.name, this.description, dateString, dateString1));
+  }
+
+  resetForm(form: NgForm) {
+    form.reset();
   }
 }

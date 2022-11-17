@@ -1,4 +1,10 @@
 <div>
+  <button (click)="loadDefinePreserveComponent();">Define Preserve</button>
+  <div *ngIf="loadComponent">
+    <app-define-preserve></app-define-preserve>
+  </div>
+</div>
+<div>
   <p *ngFor="let preserve of preserveList">
     {{preserve.name}}<br>
     {{preserve.description}}<br>

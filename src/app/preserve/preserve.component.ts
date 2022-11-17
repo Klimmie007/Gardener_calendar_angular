@@ -8,6 +8,7 @@ import { Preserve } from '../_models/preserve';
 })
 export class PreserveComponent implements OnInit {
   preserveList: Preserve[] = new Array;
+  loadComponent: boolean = false;
 
   constructor() { }
 
@@ -23,5 +24,9 @@ export class PreserveComponent implements OnInit {
         this.preserveList.push(new Preserve(`name${i}`, `desc${i}`, `2022-01-0${i}`, `2022-01-${i}`));
       }
     }
+  }
+
+  loadDefinePreserveComponent() {
+    this.loadComponent = true;
   }
 }

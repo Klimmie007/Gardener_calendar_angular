@@ -1,1 +1,18 @@
-<p>define-preserve works!</p>
+<div>
+  <p>Define your preserve</p>
+  <form #f="ngForm" (ngSubmit)="definePreserve([f.value.inName, f.value.inDescription, f.value.prodDay, f.value.prodMonth, f.value.prodYear, f.value.expDay, f.value.expMonth, f.value.expYear])">
+    <label>Name: </label>
+    <input type="text" name="inName" #inName="ngModel" ngModel required/><br>
+    <label>Description:</label><br>
+    <textarea rows="5" cols="50" name="inDescription" #inDescription="ngModel" ngModel required></textarea><br>
+    <label>Date of production: </label>
+    <input size="2" type="text" placeholder="dd" name="prodDay" #prodDay="ngModel" ngModel required/>
+    <input size="2" type="text" placeholder="mm" name="prodMonth" #prodMonth="ngModel" ngModel required/>
+    <input size="4" type="text" placeholder="yyyy" name="prodYear" #prodYear="ngModel" ngModel required/><br>
+    <label>Expiration date: </label>
+    <input size="2" type="text" placeholder="dd" name="expDay" #expDay="ngModel" ngModel required/>
+    <input size="2" type="text" placeholder="mm" name="expMonth" #expMonth="ngModel" ngModel required/>
+    <input size="4" type="text" placeholder="yyyy" name="expYear" #expYear="ngModel" ngModel required/><br>
+    <button type="submit">Define preserve</button>
+  </form>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Preserve } from '../_models/preserve';
 
 @Component({
   selector: 'app-preserve',
@@ -6,17 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./preserve.component.css']
 })
 export class PreserveComponent implements OnInit {
-  name: string = '';
-  description: string = '';
-  dateOfProduction: Date = new Date();
-  expirationDate: Date = new Date();
+  preserveList: Preserve[] = new Array;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.name = 'name';
-    this.description = 'asda dsa fsg dgfjfdfsda fgj';
-    this.dateOfProduction = new Date('2000-03-18');
-    this.expirationDate = new Date('2020-03-18');
+    for(let i = 0; i < 15; ++i) {
+      if(i == 0) {
+        this.preserveList.push(new Preserve(`name${i}`, `desc${i}`, `2022-01-01`, `2022-09-01`));
+      }
+      else if(i < 10) {
+        this.preserveList.push(new Preserve(`name${i}`, `desc${i}`, `2022-01-0${i}`, `2022-01-0${i}`));
+      }
+      else {
+        this.preserveList.push(new Preserve(`name${i}`, `desc${i}`, `2022-01-0${i}`, `2022-01-${i}`));
+      }
+    }
   }
 }

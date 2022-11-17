@@ -1,6 +1,8 @@
 <div>
-  <p>{{name}}</p>
-  <p>{{description}}</p>
-  <p>{{dateOfProduction}}</p>
-  <p>{{expirationDate}}</p>
+  <p *ngFor="let preserve of preserveList">
+    {{preserve.name}}<br>
+    {{preserve.description}}<br>
+    {{preserve.dateOfProduction}}<br>
+    {{preserve.expirationDate}}<br>
+  </p>
 </div>

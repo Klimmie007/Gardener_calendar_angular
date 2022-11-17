@@ -13,6 +13,7 @@ import { RegisterComponent } from './register/register.component';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
+import { DefinePreserveComponent } from './define-preserve/define-preserve.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthService } from './auth.service';
     MonthComponent,
     PreserveComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    DefinePreserveComponent
   ],
   imports: [
     FormsModule,

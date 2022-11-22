@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Preserve } from '../_models/preserve';
 
 @Component({
@@ -8,28 +8,33 @@ import { Preserve } from '../_models/preserve';
   styleUrls: ['./define-preserve.component.css']
 })
 export class DefinePreserveComponent implements OnInit {
-  //name: string = '';
-  //description: string = '';
-  //dateOfProduction: Date = new Date();
-  //expirationDate: Date = new Date();
   @Input() list: Preserve[] = [];
+  formModel: FormGroup;
 
   constructor() {
+    this.formModel = new FormGroup({
+      name: new FormControl(''),
+      description: new FormControl(''),
+      productionDay: new FormControl(''),
+      productionMonth: new FormControl(''),
+      productionYear: new FormControl(''),
+      expirationDay: new FormControl(''),
+      expirationMonth: new FormControl(''),
+      expirationYear: new FormControl('')
+    });
   }
 
   ngOnInit(): void {
+
   }
 
-  definePreserve(formData: string[]) {
-    //this.name = formData[0];
-    //this.description = formData[1];
-    let dateOfProduction = formData[4] + '-' + formData[3] + '-' + formData[2];
-    //this.dateOfProduction = new Date(dateString);
-    let expirationDate = formData[7] + '-' + formData[6] + '-' + formData[5];
-    //this.expirationDate = new Date(dateString1);
-    //preserves.push(new Preserve(this.name, this.description, dateString, dateString1));
-    //this.list.push(new Preserve(this.name, this.description, dateString, dateString1));
-    this.list.push(new Preserve(formData[0], formData[1], dateOfProduction, expirationDate));
+  definePreserve(formModel: FormGroup) {
+    let name = '' + formModel.controls['name'].value;
+    let desc = '' + formModel.controls['description'].value;
+    let dateOfProduction = formModel.controls['productionDay'].value + '-' + formModel.controls['productionMonth'].value + '-' + formModel.controls['productionYear'].value;
+    let expirationDate = formModel.controls['expirationDay'].value + '-' + formModel.controls['expirationMonth'].value + '-' + formModel.controls['expirationYear'].value;
+
+    this.list.push(new Preserve(name, desc, dateOfProduction, expirationDate));
   }
 
   resetForm(form: NgForm) {

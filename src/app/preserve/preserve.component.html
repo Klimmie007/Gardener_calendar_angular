@@ -8,8 +8,8 @@
 <div>
   <p *ngFor="let preserve of preserveList">
     {{preserve.name}}<br>
+    Data Produkcji: {{preserve.dateOfProduction.toLocaleDateString()}}<br>
+    Data ważności: {{preserve.expirationDate.toLocaleDateString()}}<br>
     {{preserve.description}}<br>
-    {{preserve.dateOfProduction}}<br>
-    {{preserve.expirationDate}}<br>
   </p>
 </div>

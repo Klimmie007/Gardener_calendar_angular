@@ -1,9 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createInjectableType } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module';
 import { AuthService } from '../auth.service';
-import { Backend } from '../backend';
 import { User } from '../_models/user';
 
 @Component({
@@ -63,9 +63,20 @@ export class RegisterComponent implements OnInit {
   {
     let user: User = new User(this.email, this.nickname, this.password)
     this.auth.registerUser(user.toJSON()).subscribe(
-      res => console.log(res),
-      err => console.log(err)
+      res => {
+        console.log(res)
+        localStorage.setItem('token', res.token)
+        this.router.navigate(['/account']);
+      },
+      err => {
+        if(err instanceof HttpErrorResponse)
+          alert(err.error)
+        else
+        {
+          console.log(err)
+        }
+        this.ngOnInit()
+    }
     )
-    //this.router.navigate(['/account']);
   }
 }

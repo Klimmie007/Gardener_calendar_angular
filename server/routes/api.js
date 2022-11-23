@@ -4,8 +4,10 @@ const User = require('../models/user')
 const mongoose = require('mongoose')
 const db = "mongodb+srv://Klimmie:9ZIxkdcqbt3MTuUx@gardener.8ybqtxn.mongodb.net/test"
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const saltRounds = 10
+const secretKey= "IHateJavaScript"
 
 mongoose.connect(db, err => {
     if(err){
@@ -14,6 +16,20 @@ mongoose.connect(db, err => {
         console.log('MongoDB works')
     }
 })
+
+function verifyToken(req, res, next)
+{
+    if(!req.header.token)
+        return res.status(401).send('Unauthorised access')
+    let token = req.headers.token
+    if(token == null)
+        return res.status(401).send('Unauthorised access')
+    let payload = jwt.verify(token, secretKey)
+    if(!payload)
+        return res.status(401).send('Unauthorised access')
+    req.userID = payload.subject
+    next()
+}
 
 router.get('/', (req, res) => {
     res.send('General Kenobi')
@@ -57,7 +73,9 @@ router.post('/register', (req, res) => {
                                     console.error(error)
                                 }
                                 else{
-                                    res.status(200).send(registeredUser)
+                                    let payload = { subject: registeredUser.id }
+                                    let token = jwt.sign(payload, secretKey)
+                                    res.status(200).send({token})
                                 }
                             })
                         }
@@ -88,13 +106,32 @@ router.post('/login', (req, res) => {
                     {
                         console.log(error)
                     }
+                    else if(!result)
+                    {
+                        res.status(401).send('The password is incorrect')
+                    }
                     else
                     {
-                        res.status(200).send(user)
+                        let payload = {subject: user.id}
+                        let token = jwt.sign(payload, secretKey)
+                        res.status(200).send({token})
                     }
                 })
             }
         }
+    })
+})
+
+router.post('/verify', verifyToken,  (req, res) => {
+    console.log("?")
+    User.findOne({id: req.userID}, (error, user) => {
+        if(!error && user != null)
+        {
+            console.log("verified")
+            res.status(200).send(true)
+        }
+        else
+            res.status(200).send(false)
     })
 })
 

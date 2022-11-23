@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { DefinePreserveComponent } from './define-preserve/define-preserve.component';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { DefinePreserveComponent } from './define-preserve/define-preserve.compo
     CommonModule,
     BrowserModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

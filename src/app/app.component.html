@@ -1,1 +1,18 @@
+<nav>
+    <ul class="navbar">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li *ngIf="!this.LoggedIn()">
+            <a href="/login">Login</a>
+        </li>
+        <li *ngIf="!this.LoggedIn()">
+            <a href="/register">Register</a>
+        </li>
+        <li *ngIf="this.LoggedIn()">
+            <button (click)="this.Logout()">Logout</button>
+        </li>
+    </ul>
+</nav>
+
 <router-outlet></router-outlet>

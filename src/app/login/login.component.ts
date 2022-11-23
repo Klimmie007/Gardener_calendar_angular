@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -38,8 +39,20 @@ export class LoginComponent implements OnInit {
   public onSubmit()
   {
     this.auth.loginUser({email: this.Email, password: this.Password}).subscribe(
-      res => console.log(res),
-      err => console.log(err)
+      res => {
+        localStorage.setItem('token', res.token)
+        this.router.navigate(['/'])
+      },
+      err => {
+        if(err instanceof HttpErrorResponse)
+        {
+          alert(err.error)
+        }
+        else
+        {
+          console.log(err)  
+        }
+      }
     )
   }
 }

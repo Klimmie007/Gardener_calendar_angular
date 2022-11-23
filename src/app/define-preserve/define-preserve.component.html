@@ -1,6 +1,6 @@
 <div>
   <p>Define your preserve</p>
-  <form [formGroup]="formModel" (ngSubmit)="definePreserve(formModel)">
+  <form [formGroup]="formModel" (ngSubmit)="definePreserve(formModel)" (ngSubmit)="resetForm(formModel)">
     <label>Name: </label>
     <input placeholder="Your's preserve name" type="text" formControlName="name"/><br>
     <label>Description:</label><br>

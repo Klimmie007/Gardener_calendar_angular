@@ -25,6 +25,19 @@ export class User
     {
         return this.email;
     }
+    public set Email(email: string)
+    {
+        this.email = email
+    }
+    public get Nickname(): string {
+        return this.nickname;
+    }
+    public set Nickname(value: string) {
+        this.nickname = value;
+    }
+    public set Password(val: string){
+        this.password = val
+    }
     public toJSON(): Object
     {
         return {email: this.Email, nickname: this.nickname, password: this.password}

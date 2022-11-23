@@ -1,36 +1,36 @@
+import { outputAst } from '@angular/compiler';
 import { Component, Injectable, Inject, Input, OnInit } from '@angular/core';
-import { day } from './day'
 
 @Component({
-  selector: 'app-day[Day]',
+  selector: 'app-day',
   templateUrl: './day.component.html',
   styleUrls: ['./day.component.css']
 })
 export class DayComponent implements OnInit
 {
-  private _isSelected: boolean;
-  private day: day;
+  private day: number;
+  private isSelected: boolean;
   constructor() {
-    this.day = new day(0);
-    this._isSelected = false;
-
+    this.day = 0;
+    this.isSelected = false;
   }
-  @Input('Day')
-  set Day(day: day)
+  @Input('DayNumber')
+  set Day(day: number)
   {
     this.day = day;
   }
-  get Day(): day
+  @Input('IsSelected')
+  set IsSelected(val: boolean)
+  {
+    this.isSelected = val
+  }
+  get IsSelected(): boolean
+  {
+    return this.isSelected
+  }
+  get Day(): number
   {
     return this.day;
-  }
-  public toggleSelect()
-  {
-    this._isSelected = !this._isSelected;
-  }
-  public isSelected(): boolean
-  {
-    return this._isSelected;
   }
   ngOnInit(): void {
   }

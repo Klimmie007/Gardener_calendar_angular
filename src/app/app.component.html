@@ -3,11 +3,17 @@
         <li>
             <a href="#">Home</a>
         </li>
+        <li>
+            <a href="/calendar">Calendar</a>
+        </li>
         <li *ngIf="!this.LoggedIn()">
             <a href="/login">Login</a>
         </li>
         <li *ngIf="!this.LoggedIn()">
             <a href="/register">Register</a>
+        </li>
+        <li *ngIf="this.LoggedIn()">
+            <a href="/account">Account</a>
         </li>
         <li *ngIf="this.LoggedIn()">
             <button (click)="this.Logout()">Logout</button>

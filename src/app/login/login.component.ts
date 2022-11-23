@@ -1,20 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { BackendService } from '../backend.service';
 import { User } from '../_models/user';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [AuthService]
+  providers: [BackendService]
 })
 export class LoginComponent implements OnInit {
   private email: string = ""
   private password: string = ""
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: BackendService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.auth.loginUser({email: this.Email, password: this.Password}).subscribe(
       res => {
         localStorage.setItem('token', res.token)
-        this.router.navigate(['/'])
+        this.router.navigate(['/account'])
       },
       err => {
         if(err instanceof HttpErrorResponse)

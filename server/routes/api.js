@@ -19,14 +19,14 @@ mongoose.connect(db, err => {
 
 function verifyToken(req, res, next)
 {
-    if(!req.header.token)
-        return res.status(401).send('Unauthorised access')
+    if(!req.headers.token)
+        return res.status(401).send('Unauthorised access 1')
     let token = req.headers.token
     if(token == null)
-        return res.status(401).send('Unauthorised access')
+        return res.status(401).send('Unauthorised access 2')
     let payload = jwt.verify(token, secretKey)
     if(!payload)
-        return res.status(401).send('Unauthorised access')
+        return res.status(401).send('Unauthorised access 3')
     req.userID = payload.subject
     next()
 }
@@ -122,16 +122,74 @@ router.post('/login', (req, res) => {
     })
 })
 
-router.post('/verify', verifyToken,  (req, res) => {
-    console.log("?")
-    User.findOne({id: req.userID}, (error, user) => {
+router.post('/user', verifyToken,  (req, res) => {
+    User.findById(req.userID, (error, user) => {
         if(!error && user != null)
         {
-            console.log("verified")
-            res.status(200).send(true)
+            user.password = "No password for you kek"
+            res.status(200).send(user)
         }
         else
-            res.status(200).send(false)
+            res.status(401).send("No user with specified id found")
+    })
+})
+
+router.put('/user/email', verifyToken, (req, res) => {
+    let email = req.body
+    User.findByIdAndUpdate({_id: req.userID}, {email: email.email}, {new: true}, (err, user) => {
+        if(!err && user != null)
+            res.status(204)
+        else
+            res.status(404).send("No user with specified ID found")
+
+    })
+})
+
+router.put('/user/password', verifyToken, (req, res) => {
+    let password = req.body.password
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        if(err){
+            console.log(err)
+        }
+        else{
+            bcrypt.hash(password, salt, (err, hash) => {
+                if(err)
+                {
+                    console.log(err)
+                }
+                else
+                {
+                    User.findByIdAndUpdate({_id: req.userID}, {password: hash}, {new: true}, (err, user) => {
+                        if(!err && user != null)
+                            res.status(204)
+                        else
+                            res.status(404).send("No user with specified ID found")
+                
+                    })
+                }
+            })
+        }
+    })
+    
+})
+
+router.put('/user/nickname', verifyToken, (req, res) => {
+    let nickname = req.body.nickname
+    User.findByIdAndUpdate({_id: req.userID}, {email: nickname}, {new: true}, (err, user) => {
+        if(!err && user != null)
+            res.status(204)
+        else
+            res.status(404).send("No user with specified ID found")
+
+    })
+})
+
+router.delete('/user/delete', verifyToken, (req, res) => {
+    User.findByIdAndRemove({_id: req.userID}, (err, doc) =>{
+        if(!err && doc != null)
+            res.status(204)
+        else
+            res.status(404).send("no fucking clue")
     })
 })
 

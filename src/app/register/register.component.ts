@@ -3,22 +3,22 @@ import { createInjectableType } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module';
-import { AuthService } from '../auth.service';
+import { BackendService } from '../backend.service';
 import { User } from '../_models/user';
 
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [AuthService],
+  providers: [BackendService],
 })
 export class RegisterComponent implements OnInit {
   private password: string = "";
   private email: string = "";
   private nickname: string = "";
   private router: Router;
-  private auth: AuthService;
-  constructor(router: Router, auth: AuthService) {
+  private auth: BackendService;
+  constructor(router: Router, auth: BackendService) {
     this.router = router;
     this.auth = auth;
   }

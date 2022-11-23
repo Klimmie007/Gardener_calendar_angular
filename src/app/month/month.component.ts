@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { day } from '../day/day';
 
 @Component({
   selector: 'app-month',
@@ -8,39 +7,64 @@ import { day } from '../day/day';
 })
 export class MonthComponent implements OnInit {
   private startDay: number;
-  private days: day[];
-  daysOfWeek: String[]; 
+  private month: number
+  private selected: number
+  private isLeapYear: boolean = false;
+  static daysOfMonth: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  static daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; 
+  static Months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   constructor() { 
-    this.daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     this.startDay = -1;
-    this.days = [];
+    this.month = -1;
+    this.selected = -1;
   }
   @Input('FirstDay')
   set StartDay(day: number)
   {
     this.startDay = day%7;
   }
-  @Input('TotalDays')
-  set setDays(days: number)
+  @Input('Month')
+  set Month(month: number)
   {
-    for(let i = 1; i <= days; i++)
-    {
-      this.days.push(new day(i));
-    }
+    this.month = month;
+  }
+  @Input('IsLeapYear')
+  set IsLeapYear(val: boolean)
+  {
+    this.isLeapYear = val
   }
   get StartDay() : number
   {
     return this.startDay;
   }
-  get Days(): day[]
+  get TotalDays(): number
   {
-    return this.days;
+    return MonthComponent.daysOfMonth[this.month] + (this.month == 1 && this.isLeapYear ? 1 : 0);
   }
   get Weeks(): number
   {
-    return Math.ceil((this.days.length + this.startDay + 1)/7);
+    return Math.ceil((this.TotalDays + this.startDay)/7);
   }
-
+  get DaysOfWeek() : string[]
+  {
+    return MonthComponent.daysOfWeek;
+  }
+  public get Title(): string
+  {
+    return MonthComponent.Months[this.month]
+  }
+  public get Selected(): number
+  {
+    return this.selected
+  }
+  public select(num: number)
+  {
+    console.log(num)
+    if(this.selected == num)
+      this.selected = -1;
+    else
+      this.selected = num;
+  }
   ngOnInit(): void {
   }
 

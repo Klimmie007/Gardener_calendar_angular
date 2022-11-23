@@ -1,0 +1,10 @@
+<div>
+    <table>
+        <thead>
+            {{this.Year}}
+        </thead>
+        <tbody *ngFor="let month of [].constructor(12-Month), let i = index">
+            <app-month [FirstDay]="getStartDay(Month+i, Year)" [Month]="Month+i" [IsLeapYear]="isLeapYear(Year)"></app-month>
+        </tbody>
+    </table>
+</div>

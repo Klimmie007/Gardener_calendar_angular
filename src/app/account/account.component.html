@@ -1,1 +1,6 @@
- 
+ <div>
+    <input #email [value]="this.User.Email" [disabled]="!this.EditEmail" (keyup.enter)="this.setEmail(email.value)"><button *ngIf="!this.EditEmail" (click)="this.startEditEmail()">Edit</button><pre></pre>
+    <input #nickname [value]="this.User.Nickname" [disabled]="!this.EditNickname" (keyup.enter)="this.setNickname(nickname.value)"><button *ngIf="!this.EditNickname" (click)="this.startEditNickname()">Edit</button><pre></pre>
+    <input type="password" #password [disabled]="!this.EditPassword" (keyup.enter)="this.setPassword(password.value)"><button *ngIf="!this.EditPassword" (click)="this.startEditPassword()">Edit</button><pre></pre>
+    <button (click)="this.deleteAccount()">Delete Account</button>
+ </div>

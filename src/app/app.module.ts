@@ -12,9 +12,10 @@ import { PreserveComponent } from './preserve/preserve.component';
 import { RegisterComponent } from './register/register.component';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './auth.service';
+import { BackendService } from './backend.service';
 import { DefinePreserveComponent } from './define-preserve/define-preserve.component';
 import { AuthGuard } from './auth.guard';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthGuard } from './auth.guard';
     PreserveComponent,
     RegisterComponent,
     LoginComponent,
-    DefinePreserveComponent
+    DefinePreserveComponent,
+    CalendarComponent
   ],
   imports: [
     FormsModule,
@@ -38,7 +40,7 @@ import { AuthGuard } from './auth.guard';
     CommonModule,
     BrowserModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [BackendService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

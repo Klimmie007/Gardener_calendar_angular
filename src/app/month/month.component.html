@@ -12,7 +12,7 @@
                     
                 </ng-template>
                 <ng-template #properDay>
-                    <app-day [DayNumber]="i*7+j-StartDay+1" (click)="select(i*7+j-StartDay+1)" [IsSelected]="Selected == i*7+j-StartDay+1"></app-day>
+                    <app-day #thisday [DayNumber]="i*7+j-StartDay+1" (click)="select(thisday)" [IsSelected]="Selected == i*7+j-StartDay+1 && IsSelected"></app-day>
                 </ng-template>
             </td>
         

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DayComponent } from '../day/day.component';
+import { MonthComponent } from '../month/month.component';
 
 @Component({
   selector: 'app-calendar',
@@ -7,12 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarComponent implements OnInit {
   private today: Date = new Date;
-  private _Year: number = this.today.getFullYear();
-  public get Year(): number {
-    return this._Year;
+  private selectedDate: Date = new Date(NaN)
+  private months: MonthComponent[] = []
+  private _Years: number[] = [this.today.getFullYear()];
+  public get Years(): number[] {
+    return this._Years;
   }
-  public set Year(value: number) {
-    this._Year = value;
+  public set Year(value: number[]) {
+    this._Years = value;
   }
   private _Month: number = this.today.getMonth();
   public get Month(): number {
@@ -20,6 +24,10 @@ export class CalendarComponent implements OnInit {
   }
   public set Month(value: number) {
     this._Month = value;
+  }
+  public get Months(): MonthComponent[]
+  {
+    return this.months
   }
   public getStartDay(month: number, year: number): number
   {
@@ -29,8 +37,38 @@ export class CalendarComponent implements OnInit {
   {
     return year%4 == 0 ? (year%100 == 0 ? (year%400 == 0 ? true : false) : true) : false
   }
-  constructor() { 
-
+  public callback(month: MonthComponent)
+  {
+    this.selectedDate = new Date((month.Month+1)+'/'+month.Selected+'/'+month.Year)
+    console.log(this.selectedDate)
+  }
+  get SelectedDate(): Date
+  {
+    return this.selectedDate
+  }
+  get IsValidDate(): boolean
+  {
+    return !isNaN(this.selectedDate.valueOf());
+  }
+  public genPrevious()
+  {
+    if(this.Month != 0)
+    {
+      this._Month = 0
+    }
+    else
+    {
+      this._Years.unshift(this._Years[0]-1)
+    }
+    console.log(this._Years)
+    this.ngOnInit()
+  }
+  public genNext()
+  {
+    this._Years.push(this._Years[this.Years.length-1]+1)
+  }
+  constructor() {
+    
   }
 
   ngOnInit(): void {

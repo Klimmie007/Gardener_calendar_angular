@@ -1,10 +1,15 @@
 <div>
-    <table>
+    <button (click)="genPrevious()">Previous</button>
+    <table *ngFor="let year of Years">
         <thead>
-            {{this.Year}}
+            {{this.year}}
         </thead>
-        <tbody *ngFor="let month of [].constructor(12-Month), let i = index">
-            <app-month [FirstDay]="getStartDay(Month+i, Year)" [Month]="Month+i" [IsLeapYear]="isLeapYear(Year)"></app-month>
+        <tbody *ngFor="let month of [].constructor(12-(year == Years[0] ? Month : 0)), let i = index">
+            <app-month #thismonth [FirstDay]="getStartDay((year == Years[0] ? Month : 0)+i, year)" [Month]="(year == Years[0] ? Month : 0)+i" [Year]="year" (click)="this.callback(thismonth)" [IsSelected]="(year == Years[0] ? Month : 0)+i == SelectedDate.getMonth()"></app-month>
+            <div *ngIf="this.IsValidDate && year == SelectedDate.getFullYear() && Month+i == SelectedDate.getMonth()">
+                Placeholder for a proper day component
+            </div>
         </tbody>
     </table>
+    <button (click)="genNext()">Next</button>
 </div>

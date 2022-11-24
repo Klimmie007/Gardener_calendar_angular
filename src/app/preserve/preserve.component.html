@@ -5,11 +5,13 @@
     <app-define-preserve [list]="preserveList"></app-define-preserve>
   </div>
 </div>
-<div>
-  <p *ngFor="let preserve of preserveList">
+<hr>
+<div *ngFor="let preserve of preserveList">
+  <p>
     {{preserve.name}}<br>
     Data Produkcji: {{preserve.dateOfProduction.toLocaleDateString()}}<br>
     Data ważności: {{preserve.expirationDate.toLocaleDateString()}}<br>
     {{preserve.description}}<br>
   </p>
+  <hr>
 </div>

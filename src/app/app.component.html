@@ -6,6 +6,9 @@
         <li>
             <a href="/calendar">Calendar</a>
         </li>
+        <li *ngIf="this.LoggedIn()">
+          <a href="/preserve">Preserves</a>
+        </li>
         <li *ngIf="!this.LoggedIn()">
             <a href="/login">Login</a>
         </li>

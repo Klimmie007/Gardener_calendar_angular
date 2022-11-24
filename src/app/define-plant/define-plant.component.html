@@ -1,0 +1,21 @@
+<div>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+
+            <label for="icon">Icon</label><br>
+
+            <input type="text" name="icon" [(ngModel)]="Icon" ng-model-options="{ getterSetter: true }" >
+            <div class="error">{{this.IconError}}</div>
+            <img id="icon" [src]="Icon" height="50" (load)="onLoad($event)" (error)="onError($event)">
+        </div>
+        <pre></pre>
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>

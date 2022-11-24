@@ -16,6 +16,7 @@
     "@angular/core": "^14.2.0",
     "@angular/fire": "^7.4.1",
     "@angular/forms": "^14.2.0",
+    "@angular/material": "^7.0.0",
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.6",
-    "@angular/cli": "~14.2.6",
+    "@angular/cli": "^15.0.1",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
     "jasmine-core": "~4.3.0",

@@ -69,4 +69,8 @@ export class BackendService {
   public addPreserve(preserve: Preserve): Observable<Preserve> {
     return this.http.post<Preserve>(this._preservesURL, preserve);
   }
+
+  public getPreserves(): Observable<Array<Preserve>> {
+    return this.http.get<Array<Preserve>>(this._preservesURL);
+  }
 }

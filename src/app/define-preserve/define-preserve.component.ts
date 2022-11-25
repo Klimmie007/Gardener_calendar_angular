@@ -38,8 +38,8 @@ export class DefinePreserveComponent implements OnInit {
     if(formModel.valid) {
       let name = '' + formModel.controls['name'].value;
       let desc = '' + formModel.controls['description'].value;
-      let dateOfProduction = formModel.controls['productionMonth'].value + '-' + formModel.controls['productionDay'].value + '-' + formModel.controls['productionYear'].value;
-      let expirationDate = formModel.controls['expirationMonth'].value + '-' + formModel.controls['expirationDay'].value + '-' + formModel.controls['expirationYear'].value;
+      let dateOfProduction = formModel.controls['productionYear'].value + '-' + formModel.controls['productionMonth'].value + '-' + formModel.controls['productionDay'].value;
+      let expirationDate = formModel.controls['expirationYear'].value + '-' + formModel.controls['expirationMonth'].value + '-' + formModel.controls['expirationDay'].value;
 
       let preserve: Preserve = new Preserve(name, desc, dateOfProduction, expirationDate);
 

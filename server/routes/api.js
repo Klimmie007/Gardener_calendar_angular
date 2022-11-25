@@ -208,4 +208,14 @@ router.post('/preserves', (req, res) => {
   });
 });
 
+router.get('/preserves', async (req, res) => {
+  try {
+    const data = await Preserve.find();
+    res.json(data);
+  }
+  catch(error) {
+    res.status(500).json({message: error.message});
+  }
+});
+
 module.exports = router

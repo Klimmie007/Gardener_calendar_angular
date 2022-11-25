@@ -12,6 +12,7 @@ export class PreserveComponent implements OnInit {
   preserveList: Preserve[] = new Array<Preserve>;
   loadComponent: boolean = false;
   private auth: BackendService;
+  color = 'lightblue';
 
   constructor(auth: BackendService) {
     this.auth = auth;

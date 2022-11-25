@@ -16,6 +16,7 @@ import { BackendService } from './backend.service';
 import { DefinePreserveComponent } from './define-preserve/define-preserve.component';
 import { AuthGuard } from './auth.guard';
 import { CalendarComponent } from './calendar/calendar.component';
+import { HighlightDirective } from './highlight.directive';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     RegisterComponent,
     LoginComponent,
     DefinePreserveComponent,
-    CalendarComponent
+    CalendarComponent,
+    HighlightDirective
   ],
   imports: [
     FormsModule,

@@ -5,8 +5,8 @@
     <app-define-preserve [list]="preserveList"></app-define-preserve>
   </div>
 </div>
-<hr>
-<div *ngFor="let preserve of preserveList">
+<div *ngFor="let preserve of preserveList" [appHighlight]="color">
+  <hr>
   <p>
     {{preserve.name}}<br>
     Data Produkcji: {{preserve.dateOfProduction | date: 'mediumDate'}}<br>

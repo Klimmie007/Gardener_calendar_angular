@@ -9,8 +9,8 @@
 <div *ngFor="let preserve of preserveList">
   <p>
     {{preserve.name}}<br>
-    Data Produkcji: {{preserve.dateOfProduction}}<br>
-    Data ważności: {{preserve.expirationDate}}<br>
+    Data Produkcji: {{preserve.dateOfProduction | date: 'mediumDate'}}<br>
+    Data ważności: {{preserve.expirationDate | date: 'mediumDate'}}<br>
     {{preserve.description}}<br>
   </p>
   <hr>

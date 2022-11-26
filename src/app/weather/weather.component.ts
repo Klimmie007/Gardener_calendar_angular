@@ -7,12 +7,28 @@ import { WeatherService } from '../weather.service';
   styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent implements OnInit {
-  timeline: any[] = [];
-  weatherNow: any;
-  currentTime = new Date();
-  location: any;
+  private timeline: any[] = [];
+  private weatherNow: any;
+  private currentTime = new Date();
+  private location: any;
 
   constructor(private weatherService: WeatherService) { }
+
+  get Timeline(): any[] {
+    return this.timeline;
+  }
+
+  get WeatherNow(): any {
+    return this.weatherNow;
+  }
+
+  get CurrentTime(): Date {
+    return this.currentTime;
+  }
+
+  get Location(): any {
+    return this.location;
+  }
 
   ngOnInit(): void {
     this.weatherService.getWeatherForecast().subscribe(data => {

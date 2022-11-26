@@ -1,6 +1,6 @@
 <div>
   <p>Define your preserve</p>
-  <form [formGroup]="formModel" (ngSubmit)="definePreserve(formModel)" (ngSubmit)="resetForm(formModel)">
+  <form [formGroup]="FormModel" (ngSubmit)="definePreserve(FormModel)" (ngSubmit)="resetForm(FormModel)">
     <label>Name: </label>
     <input placeholder="Your's preserve name" type="text" formControlName="name" minlength="3" maxlength="50" required/><br>
     <div *ngIf="name?.invalid && (name?.dirty || name?.touched)">

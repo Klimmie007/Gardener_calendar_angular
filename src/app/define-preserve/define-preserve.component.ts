@@ -12,7 +12,7 @@ import { BackendService } from '../backend.service';
 })
 export class DefinePreserveComponent implements OnInit {
   @Input() list: Preserve[] = [];
-  formModel: FormGroup;
+  private formModel: FormGroup;
   private auth: BackendService;
 
   constructor(auth: BackendService) {
@@ -28,6 +28,10 @@ export class DefinePreserveComponent implements OnInit {
     });
 
     this.auth = auth;
+  }
+
+  get FormModel(): FormGroup {
+    return this.formModel;
   }
 
   get name() {
@@ -74,9 +78,9 @@ export class DefinePreserveComponent implements OnInit {
       let dateOfProduction = formModel.controls['productionYear'].value + '-' + formModel.controls['productionMonth'].value + '-' + formModel.controls['productionDay'].value;
       let expirationDate = formModel.controls['expirationYear'].value + '-' + formModel.controls['expirationMonth'].value + '-' + formModel.controls['expirationDay'].value;
 
-      let preserve: Preserve = new Preserve(name, desc, dateOfProduction, expirationDate);
+      let preserve: Preserve = new Preserve(name, desc, new Date(dateOfProduction), new Date(expirationDate));
 
-      this.auth.addPreserve(preserve).subscribe(res => {
+      this.auth.addPreserve(preserve.toJSON()).subscribe(res => {
         console.log(res);
       }, err => {
         if(err instanceof HttpErrorResponse) {

@@ -1,14 +1,45 @@
 export class Preserve {
-  name: string;
-  description: string;
-  dateOfProduction: Date;
-  expirationDate: Date;
+  private name: string;
+  private description: string;
+  private dateOfProduction: Date;
+  private expirationDate: Date;
 
-  constructor(name: string, description: string, dateOfProduction: string, expirationDate: string) {
+  constructor(name: string, description: string, dateOfProduction: Date, expirationDate: Date) {
     this.name = name;
     this.description = description;
-    this.dateOfProduction = new Date(dateOfProduction);
-    this.expirationDate = new Date(expirationDate);
+    this.dateOfProduction = dateOfProduction;
+    this.expirationDate = expirationDate;
+  }
+
+  get Name(): string {
+    return this.name;
+  }
+
+  set Name(name: string) {
+    this.name = name;
+  }
+  get Description(): string {
+    return this.description;
+  }
+
+  set Description(description: string) {
+    this.description = description;
+  }
+
+  get DateOfProduction(): Date {
+    return this.dateOfProduction;
+  }
+
+  set DateOfProduction(date: Date) {
+    this.dateOfProduction = date;
+  }
+
+  get ExpirationDate(): Date {
+    return this.expirationDate;
+  }
+
+  set ExpirationDate(date: Date) {
+    this.expirationDate = date;
   }
 
   public toJSON(): Object {

@@ -8,9 +8,13 @@ import { WeatherService } from '../weather.service';
   styleUrls: ['./future-weather.component.css']
 })
 export class FutureWeatherComponent implements OnInit {
-  weatherData: any = [];
+  private weatherData: any = [];
 
   constructor(private weatherService: WeatherService) { }
+
+  get WeatherData(): any {
+    return this.weatherData;
+  }
 
   ngOnInit(): void {
     this.weatherService.getWeatherForecast().pipe(pluck('list')).subscribe(data => {

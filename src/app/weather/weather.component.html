@@ -1,25 +1,25 @@
-<div *ngIf="weatherNow">
+<div *ngIf="WeatherNow">
   <div>
-    {{ currentTime | date: "HH:mm - EE MMM"}}
+    {{ CurrentTime | date: "HH:mm - EE MMM"}}
   </div>
   <div>
-    {{ location.name }}, {{location.country}}
+    {{ Location.name }}, {{Location.country}}
   </div>
   <div>
-    <h3>Temperature: {{weatherNow.main.temp | number: '1.0-0'}} °C</h3>
+    <h3>Temperature: {{WeatherNow.main.temp | number: '1.0-0'}} °C</h3>
   </div>
   <div>
     <div>
-      Feels like {{weatherNow.main.feels_like | number: '1.0-0'}} °C.
-      {{weatherNow.weather[0].main}}.
-      {{weatherNow.weather[0].description | titlecase}}.
+      Feels like {{WeatherNow.main.feels_like | number: '1.0-0'}} °C.
+      {{WeatherNow.weather[0].main}}.
+      {{WeatherNow.weather[0].description | titlecase}}.
     </div>
     <div>
-      Humidity: {{weatherNow.main.humidity}}%
+      Humidity: {{WeatherNow.main.humidity}}%
     </div>
     <div class="timeline">
       <h1>3-hour Forecast</h1>
-      <div *ngFor="let item of timeline">
+      <div *ngFor="let item of Timeline">
         <div>{{item.time | date: 'HH:mm'}}</div>
         <div>{{item.temp | number: '1.0-0'}} °C</div>
       </div>

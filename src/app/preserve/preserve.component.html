@@ -1,17 +1,17 @@
 <div>
-  <button *ngIf="!loadComponent" (click)="loadDefinePreserveComponent();">Define Preserve</button>
-  <button *ngIf="loadComponent" (click)="loadDefinePreserveComponent();">Hide</button>
-  <div *ngIf="loadComponent">
-    <app-define-preserve [list]="preserveList"></app-define-preserve>
+  <button *ngIf="!LoadComponent" (click)="loadDefinePreserveComponent();">Define Preserve</button>
+  <button *ngIf="LoadComponent" (click)="loadDefinePreserveComponent();">Hide</button>
+  <div *ngIf="LoadComponent">
+    <app-define-preserve [list]="PreserveList"></app-define-preserve>
   </div>
 </div>
-<div *ngFor="let preserve of preserveList" [appHighlight]="color">
+<div *ngFor="let preserve of PreserveList" [appHighlight]="Color">
   <hr>
   <p>
-    {{preserve.name}}<br>
-    Data Produkcji: {{preserve.dateOfProduction | date: 'mediumDate'}}<br>
-    Data ważności: {{preserve.expirationDate | date: 'mediumDate'}}<br>
-    {{preserve.description}}<br>
+    {{preserve.Name}}<br>
+    Data Produkcji: {{preserve.DateOfProduction | date: 'mediumDate'}}<br>
+    Data ważności: {{preserve.ExpirationDate | date: 'mediumDate'}}<br>
+    {{preserve.Description}}<br>
   </p>
   <hr>
 </div>

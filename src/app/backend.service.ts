@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Preserve } from '../app/_models/preserve';
+//import { Preserve } from '../app/_models/preserve';
 
 interface token{
   token: string
@@ -10,6 +10,13 @@ interface token{
 interface User{
   email: string
   nickname: string
+}
+
+interface Preserve {
+  name: string;
+  description: string;
+  dateOfProduction: Date;
+  expirationDate: Date;
 }
 
 @Injectable({
@@ -66,8 +73,8 @@ export class BackendService {
   }
 
   // Preserve
-  public addPreserve(preserve: Preserve): Observable<Preserve> {
-    return this.http.post<Preserve>(this._preservesURL, preserve);
+  public addPreserve(preserve: Object): Observable<Object> {
+    return this.http.post<Object>(this._preservesURL, preserve);
   }
 
   public getPreserves(): Observable<Array<Preserve>> {

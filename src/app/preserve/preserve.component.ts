@@ -9,10 +9,10 @@ import { BackendService } from '../backend.service';
   providers: [BackendService],
 })
 export class PreserveComponent implements OnInit {
-  preserveList: Preserve[] = new Array<Preserve>;
-  loadComponent: boolean = false;
+  private preserveList: Preserve[] = new Array<Preserve>;
+  private loadComponent: boolean = false;
   private auth: BackendService;
-  color = 'lightblue';
+  private color = 'lightblue';
 
   constructor(auth: BackendService) {
     this.auth = auth;
@@ -22,9 +22,24 @@ export class PreserveComponent implements OnInit {
     this.getPreserves();
   }
 
+  get PreserveList(): Array<Preserve> {
+    return this.preserveList;
+  }
+
+  get LoadComponent(): boolean {
+    return this.loadComponent;
+  }
+
+  get Color(): string {
+    return this.color;
+  }
+
   getPreserves() {
     this.auth.getPreserves().subscribe(preserves => {
-      this.preserveList = preserves;
+      //this.preserveList = preserves;
+      for(let i = 0; i < preserves.length; ++i) {
+        this.preserveList.push(new Preserve(preserves[i].name, preserves[i].description, preserves[i].dateOfProduction, preserves[i].expirationDate));
+      }
     });
   }
 

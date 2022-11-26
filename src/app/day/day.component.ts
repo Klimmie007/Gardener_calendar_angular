@@ -8,6 +8,7 @@ import { Component, Injectable, Inject, Input, OnInit } from '@angular/core';
 })
 export class DayComponent implements OnInit
 {
+  color = 'cyan';
   private day: number;
   private isSelected: boolean;
   constructor() {

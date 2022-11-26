@@ -10,6 +10,10 @@ export class Preserve {
     this.dateOfProduction = new Date(dateOfProduction);
     this.expirationDate = new Date(expirationDate);
   }
+
+  public toJSON(): Object {
+    return {name: this.name, description: this.description, dateOfProduction: this.dateOfProduction, expirationDate: this.expirationDate};
+  }
 }
 
 export let preserves: Preserve[] = [

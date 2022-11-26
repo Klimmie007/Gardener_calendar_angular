@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+const Preserve = require('../models/preserve')
 const mongoose = require('mongoose')
 const db = "mongodb+srv://Klimmie:9ZIxkdcqbt3MTuUx@gardener.8ybqtxn.mongodb.net/test"
 const bcrypt = require('bcrypt')
@@ -164,13 +165,13 @@ router.put('/user/password', verifyToken, (req, res) => {
                             res.status(204)
                         else
                             res.status(404).send("No user with specified ID found")
-                
+
                     })
                 }
             })
         }
     })
-    
+
 })
 
 router.put('/user/nickname', verifyToken, (req, res) => {
@@ -192,5 +193,29 @@ router.delete('/user/delete', verifyToken, (req, res) => {
             res.status(404).send("no fucking clue")
     })
 })
+
+router.post('/preserves', (req, res) => {
+  let preserveData = req.body;
+  let preserve = new Preserve(preserveData);
+
+  preserve.save((error, newPreserve) =>{
+    if(error){
+        console.error(error)
+    }
+    else{
+        res.status(200).send({newPreserve})
+    }
+  });
+});
+
+router.get('/preserves', async (req, res) => {
+  try {
+    const data = await Preserve.find();
+    res.json(data);
+  }
+  catch(error) {
+    res.status(500).json({message: error.message});
+  }
+});
 
 module.exports = router

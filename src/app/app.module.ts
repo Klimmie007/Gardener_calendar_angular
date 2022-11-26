@@ -25,6 +25,9 @@ import { AuthGuard } from './auth.guard';
 import { CalendarComponent } from './calendar/calendar.component';
 import { PlantsComponent } from './plants/plants.component';
 import { DefinePlantComponent } from './define-plant/define-plant.component';
+import { HighlightDirective } from './highlight.directive';
+import { WeatherComponent } from './weather/weather.component';
+import { FutureWeatherComponent } from './future-weather/future-weather.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { DefinePlantComponent } from './define-plant/define-plant.component';
     DefinePreserveComponent,
     CalendarComponent,
     PlantsComponent,
-    DefinePlantComponent
+    DefinePlantComponent,
+    HighlightDirective,
+    WeatherComponent,
+    FutureWeatherComponent,
   ],
   imports: [
     FormsModule,

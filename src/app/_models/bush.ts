@@ -1,4 +1,4 @@
-import { DateRange, IPlant } from "./plantINterface";
+import { DateRange, IPlant } from "./plantInterface";
 
 export class Bush implements IPlant
 {

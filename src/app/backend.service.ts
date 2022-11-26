@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Preserve } from '../app/_models/preserve';
 
 interface token{
   token: string
@@ -18,6 +19,7 @@ export class BackendService {
   private _registerURL: string = "http://localhost:3000/api/register"
   private _loginURL: string = "http://localhost:3000/api/login"
   private _userURL: string = "http://localhost:3000/api/user"
+  private _preservesURL: string = "http://localhost:3000/api/preserves"
   private _emailURL: string = this._userURL + "/email"
   private _nicknameURL: string =  this._userURL + "/nickname"
   private _passwordURL: string = this._userURL + "/password"
@@ -61,5 +63,14 @@ export class BackendService {
   {
     this.header.set('token', localStorage.getItem('token') || "")
     return this.http.delete(this._deleteURL, {headers: this.header})
+  }
+
+  // Preserve
+  public addPreserve(preserve: Preserve): Observable<Preserve> {
+    return this.http.post<Preserve>(this._preservesURL, preserve);
+  }
+
+  public getPreserves(): Observable<Array<Preserve>> {
+    return this.http.get<Array<Preserve>>(this._preservesURL);
   }
 }

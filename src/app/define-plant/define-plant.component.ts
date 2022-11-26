@@ -10,7 +10,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/c
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IPlant, PlantType } from '../_models/plantINterface';
+import { IPlant, PlantType } from '../_models/plantInterface';
 
 @Component({
   selector: 'app-define-plant',

@@ -1,38 +1,63 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Preserve } from '../_models/preserve';
+import { BackendService } from '../backend.service';
 
 @Component({
   selector: 'app-define-preserve',
   templateUrl: './define-preserve.component.html',
-  styleUrls: ['./define-preserve.component.css']
+  styleUrls: ['./define-preserve.component.css'],
+  providers: [BackendService],
 })
 export class DefinePreserveComponent implements OnInit {
-  //name: string = '';
-  //description: string = '';
-  //dateOfProduction: Date = new Date();
-  //expirationDate: Date = new Date();
   @Input() list: Preserve[] = [];
+  formModel: FormGroup;
+  private auth: BackendService;
 
-  constructor() {
+  constructor(auth: BackendService) {
+    this.formModel = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      description: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
+      productionDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
+      productionMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
+      productionYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]),
+      expirationDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
+      expirationMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
+      expirationYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)])
+    });
+
+    this.auth = auth;
   }
 
   ngOnInit(): void {
+
   }
 
-  definePreserve(formData: string[]) {
-    //this.name = formData[0];
-    //this.description = formData[1];
-    let dateOfProduction = formData[4] + '-' + formData[3] + '-' + formData[2];
-    //this.dateOfProduction = new Date(dateString);
-    let expirationDate = formData[7] + '-' + formData[6] + '-' + formData[5];
-    //this.expirationDate = new Date(dateString1);
-    //preserves.push(new Preserve(this.name, this.description, dateString, dateString1));
-    //this.list.push(new Preserve(this.name, this.description, dateString, dateString1));
-    this.list.push(new Preserve(formData[0], formData[1], dateOfProduction, expirationDate));
+  definePreserve(formModel: FormGroup) {
+    if(formModel.valid) {
+      let name = '' + formModel.controls['name'].value;
+      let desc = '' + formModel.controls['description'].value;
+      let dateOfProduction = formModel.controls['productionYear'].value + '-' + formModel.controls['productionMonth'].value + '-' + formModel.controls['productionDay'].value;
+      let expirationDate = formModel.controls['expirationYear'].value + '-' + formModel.controls['expirationMonth'].value + '-' + formModel.controls['expirationDay'].value;
+
+      let preserve: Preserve = new Preserve(name, desc, dateOfProduction, expirationDate);
+
+      this.auth.addPreserve(preserve).subscribe(res => {
+        console.log(res);
+      }, err => {
+        if(err instanceof HttpErrorResponse) {
+          alert(err.error);
+        }
+        else {
+          console.log(err);
+        }
+      });
+      this.list.push(preserve);
+    }
   }
 
-  resetForm(form: NgForm) {
-    form.reset();
+  resetForm(formModel: FormGroup) {
+    formModel.reset();
   }
 }

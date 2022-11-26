@@ -1,18 +1,18 @@
 <div>
   <p>Define your preserve</p>
-  <form #f="ngForm" (ngSubmit)="definePreserve([f.value.inName, f.value.inDescription, f.value.prodDay, f.value.prodMonth, f.value.prodYear, f.value.expDay, f.value.expMonth, f.value.expYear])" (ngSubmit)="resetForm(f)">
+  <form [formGroup]="formModel" (ngSubmit)="definePreserve(formModel)" (ngSubmit)="resetForm(formModel)">
     <label>Name: </label>
-    <input placeholder="Your's preserve name" type="text" name="inName" #inName="ngModel" ngModel ngModel minlength="3" maxlength="100" required/><br>
+    <input placeholder="Your's preserve name" type="text" formControlName="name"/><br>
     <label>Description:</label><br>
-    <textarea placeholder="Describe your preserve" rows="5" cols="50" name="inDescription" #inDescription="ngModel" ngModel maxlength="500" required></textarea><br>
+    <textarea placeholder="Describe your preserve" rows="5" cols="50" formControlName="description"></textarea><br>
     <label>Date of production: </label>
-    <input size="2" type="text" placeholder="dd" name="prodDay" #prodDay="ngModel" ngModel minlength="2" maxlength="2" required/>
-    <input size="2" type="text" placeholder="mm" name="prodMonth" #prodMonth="ngModel" ngModel minlength="2" maxlength="2" required/>
-    <input size="4" type="text" placeholder="yyyy" name="prodYear" #prodYear="ngModel" ngModel minlength="4" maxlength="4" required/><br>
+    <input size="2" type="text" placeholder="dd" formControlName="productionDay"/>
+    <input size="2" type="text" placeholder="mm" formControlName="productionMonth"/>
+    <input size="4" type="text" placeholder="yyyy" formControlName="productionYear"/><br>
     <label>Expiration date: </label>
-    <input size="2" type="text" placeholder="dd" name="expDay" #expDay="ngModel" ngModel minlength="2" maxlength="2" required/>
-    <input size="2" type="text" placeholder="mm" name="expMonth" #expMonth="ngModel" ngModel minlength="2" maxlength="2" required/>
-    <input size="4" type="text" placeholder="yyyy" name="expYear" #expYear="ngModel" ngModel minlength="4" maxlength="4" required/><br><br>
+    <input size="2" type="text" placeholder="dd" formControlName="expirationDay"/>
+    <input size="2" type="text" placeholder="mm" formControlName="expirationMonth"/>
+    <input size="4" type="text" placeholder="yyyy" formControlName="expirationYear"/><br><br>
     <button type="submit">Submit</button>
   </form>
 </div>

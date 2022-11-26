@@ -1,4 +1,4 @@
-import { IPlant, DateRange } from "./plantINterface"
+import { IPlant, DateRange } from "./plantInterface"
 
 export class Plant implements IPlant
 {

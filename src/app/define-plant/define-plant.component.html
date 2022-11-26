@@ -1,21 +1,49 @@
 <div>
+  <mat-form-field appearance="fill">
+    <mat-label>Plant type</mat-label>
+    <pre></pre>
+    <mat-select>
+      <mat-option *ngFor="let plant of plantTypes" [value]="plant">
+        {{plant}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <pre></pre>
     <form (ngSubmit)="onSubmit()">
         <div class="form-group">
 
-            <label for="icon">Icon</label><br>
+            <label for="icon">Icon URL</label><br>
 
             <input type="text" name="icon" [(ngModel)]="Icon" ng-model-options="{ getterSetter: true }" >
             <div class="error">{{this.IconError}}</div>
             <img id="icon" [src]="Icon" height="50" (load)="onLoad($event)" (error)="onError($event)">
         </div>
-        <pre></pre>
         <mat-form-field appearance="fill">
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-label>Sowing Season</mat-label>
+            <pre></pre>
+            <mat-date-range-input disabled [formGroup]="sowingRange" [rangePicker]="picker">
+              <input required matStartDate placeholder="Start" formControlName="start">
+              <input required matEndDate placeholder="End" formControlName="end">
+            </mat-date-range-input>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-date-range-picker disabled="false" #picker [calendarHeaderComponent]="exampleHeader"></mat-date-range-picker>
           </mat-form-field>
+          <pre></pre>
+          <div *ngIf="type == PlantTypeEnum.Plant; else bushOrTree">
+            
+          </div>
+          <ng-template #bushOrTree>
+            <mat-form-field appearance="fill">
+              <mat-label>Yield Season</mat-label>
+              <pre></pre>
+              <mat-date-range-input disabled [formGroup]="yieldDateRange" [rangePicker]="picker">
+                <input required matStartDate placeholder="Start" formControlName="start">
+                <input required matEndDate placeholder="End" formControlName="end">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker disabled="false" #picker [calendarHeaderComponent]="exampleHeader"></mat-date-range-picker>
+            </mat-form-field>
+          </ng-template>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
 </div>

@@ -1,19 +1,7 @@
-export class Plant
+import { IPlant, DateRange } from "./plantINterface"
+
+export class Plant implements IPlant
 {
-    private _sowingSeasonStart: Date
-    public get sowingSeasonStart(): Date {
-        return this._sowingSeasonStart
-    }
-    public set sowingSeasonStart(value: Date) {
-        this._sowingSeasonStart = value
-    }
-    private _sowingSeasonEnds: Date
-    public get sowingSeasonEnds(): Date {
-        return this._sowingSeasonEnds
-    }
-    public set sowingSeasonEnds(value: Date) {
-        this._sowingSeasonEnds = value
-    }
     private _minVegetationCycleInDays: number
     public get minVegetationCycleInDays(): number {
         return this._minVegetationCycleInDays
@@ -49,16 +37,30 @@ export class Plant
     public set icon(value: string) {
         this._icon = value
     }
+    public whenYields(date: Date): DateRange {
+        let startRange, endRange: Date
+        startRange = new Date(date)
+        startRange.setDate(startRange.getDate() + this.minVegetationCycleInDays)
+        endRange = new Date(date)
+        endRange.setDate(endRange.getDate() + this.maxVegetationCycleInDays)
+        return new DateRange(startRange, endRange)
+    }
     
 
-    constructor(sowSeasonStart: Date, sowSeasonEnd: Date, minVegetationTimeInDays: number, maxVegetationTimeInDays: number, name: string, image: string, icon: string)
+    constructor(sowSeason: DateRange, minVegetationTimeInDays: number, maxVegetationTimeInDays: number, name: string, image: string, icon: string)
     {
-        this._sowingSeasonStart = sowSeasonStart
-        this._sowingSeasonEnds = sowSeasonEnd
+        this._sowingSeason = sowSeason
         this._minVegetationCycleInDays = minVegetationTimeInDays
         this._maxVegetationCycleInDays = maxVegetationTimeInDays
         this._name = name
         this._image = image
         this._icon = icon
+    }
+    private _sowingSeason: DateRange
+    public get sowingSeason(): DateRange {
+        return this._sowingSeason
+    }
+    public set sowingSeason(value: DateRange) {
+        this._sowingSeason = value
     }
 }

@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatNativeDateModule } from '@angular/material/core'
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core'
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input' 
+import { MatInputModule } from '@angular/material/input'
+import { MatIconModule } from '@angular/material/icon'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {MatSelectModule} from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,13 +49,17 @@ import { DefinePlantComponent } from './define-plant/define-plant.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   exports: [
     CommonModule,
     BrowserModule
   ],
-  providers: [BackendService, AuthGuard],
+  providers: [BackendService, AuthGuard, {provide: MAT_DATE_LOCALE, useValue: 'pl'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

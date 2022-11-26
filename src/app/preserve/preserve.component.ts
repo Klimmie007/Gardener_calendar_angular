@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Preserve, preserves } from '../_models/preserve';
+import { Preserve } from '../_models/preserve';
 import { BackendService } from '../backend.service';
 
 @Component({

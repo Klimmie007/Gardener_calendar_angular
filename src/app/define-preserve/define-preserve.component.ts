@@ -19,15 +19,47 @@ export class DefinePreserveComponent implements OnInit {
     this.formModel = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       description: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
-      productionDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|[12][0-9]|3[01])\b")]),
-      productionMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|1[0-2])\b")]),
-      productionYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern("\b(199[0-9]|20[0-9][0-9])\b")]),
-      expirationDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|[12][0-9]|3[01])\b")]),
-      expirationMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|1[0-2])\b")]),
-      expirationYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern("\b(199[0-9]|20[0-9][0-9])\b")])
+      productionDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("(0[1-9]|[12][0-9]|3[01]|[1-9])")]),
+      productionMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("(0[1-9]|1[012]|[1-9])")]),
+      productionYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern("(199[0-9]|20[0-9][0-9])")]),
+      expirationDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("(0[1-9]|[12][0-9]|3[01]|[1-9])")]),
+      expirationMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("(0[1-9]|1[012]|[1-9])")]),
+      expirationYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern("(199[0-9]|20[0-9][0-9])")])
     });
 
     this.auth = auth;
+  }
+
+  get name() {
+    return this.formModel.get('name');
+  }
+
+  get description() {
+    return this.formModel.get('description');
+  }
+
+  get productionDay() {
+    return this.formModel.get('productionDay');
+  }
+
+  get productionMonth() {
+    return this.formModel.get('productionMonth');
+  }
+
+  get productionYear() {
+    return this.formModel.get('productionYear');
+  }
+
+  get expirationDay() {
+    return this.formModel.get('expirationDay');
+  }
+
+  get expirationMonth() {
+    return this.formModel.get('expirationMonth');
+  }
+
+  get expirationYear() {
+    return this.formModel.get('expirationYear');
   }
 
   ngOnInit(): void {
@@ -36,6 +68,7 @@ export class DefinePreserveComponent implements OnInit {
 
   definePreserve(formModel: FormGroup) {
     if(formModel.valid) {
+      console.log("dziala");
       let name = '' + formModel.controls['name'].value;
       let desc = '' + formModel.controls['description'].value;
       let dateOfProduction = formModel.controls['productionYear'].value + '-' + formModel.controls['productionMonth'].value + '-' + formModel.controls['productionDay'].value;

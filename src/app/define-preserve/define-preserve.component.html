@@ -3,16 +3,60 @@
   <form [formGroup]="formModel" (ngSubmit)="definePreserve(formModel)" (ngSubmit)="resetForm(formModel)">
     <label>Name: </label>
     <input placeholder="Your's preserve name" type="text" formControlName="name" minlength="3" maxlength="50" required/><br>
+    <div *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+      <div *ngIf="name?.errors?.['required']">
+        Name is required.
+      </div>
+      <div *ngIf="name?.errors?.['minlength']">
+        Name must be at least 3 characters long.
+      </div>
+    </div>
     <label>Description:</label><br>
     <textarea placeholder="Describe your preserve" rows="5" cols="50" formControlName="description" minlength="1" maxlength="500" required></textarea><br>
+    <div *ngIf="description?.invalid && (description?.dirty || description?.touched)">
+      <div *ngIf="description?.errors?.['required']">
+        Description is required.
+      </div>
+    </div>
     <label>Date of production: </label>
     <input size="2" type="text" placeholder="dd" formControlName="productionDay" minlength="1" maxlength="2" required/>
     <input size="2" type="text" placeholder="mm" formControlName="productionMonth" minlength="1" maxlength="2" required/>
     <input size="4" type="text" placeholder="yyyy" formControlName="productionYear" minlength="4" maxlength="4" required/><br>
+    <div *ngIf="productionDay?.invalid && (productionDay?.dirty || productionDay?.touched)">
+      <div *ngIf="productionDay?.errors?.['required']">
+        Day is required.
+      </div>
+    </div>
+    <div *ngIf="productionMonth?.invalid && (productionMonth?.dirty || productionMonth?.touched)">
+      <div *ngIf="productionMonth?.errors?.['required']">
+        Month is required.
+      </div>
+    </div>
+    <div *ngIf="productionYear?.invalid && (productionYear?.dirty || productionYear?.touched)">
+      <div *ngIf="productionYear?.errors?.['required']">
+        Year is required.
+      </div>
+    </div>
     <label>Expiration date: </label>
     <input size="2" type="text" placeholder="dd" formControlName="expirationDay" minlength="1" maxlength="2" required/>
     <input size="2" type="text" placeholder="mm" formControlName="expirationMonth" minlength="1" maxlength="2" required/>
-    <input size="4" type="text" placeholder="yyyy" formControlName="expirationYear" minlength="4" maxlength="4" required/><br><br>
+    <input size="4" type="text" placeholder="yyyy" formControlName="expirationYear" minlength="4" maxlength="4" required/>
+    <div *ngIf="expirationDay?.invalid && (expirationDay?.dirty || expirationDay?.touched)">
+      <div *ngIf="expirationDay?.errors?.['required']">
+        Day is required.
+      </div>
+    </div>
+    <div *ngIf="expirationMonth?.invalid && (expirationMonth?.dirty || expirationMonth?.touched)">
+      <div *ngIf="expirationMonth?.errors?.['required']">
+        Month is required.
+      </div>
+    </div>
+    <div *ngIf="expirationYear?.invalid && (expirationYear?.dirty || expirationYear?.touched)">
+      <div *ngIf="expirationYear?.errors?.['required']">
+        Year is required.
+      </div>
+    </div>
+    <br>
     <button type="submit">Submit</button>
   </form>
 </div>

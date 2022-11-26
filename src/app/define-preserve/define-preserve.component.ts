@@ -19,12 +19,12 @@ export class DefinePreserveComponent implements OnInit {
     this.formModel = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       description: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500)]),
-      productionDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
-      productionMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
-      productionYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]),
-      expirationDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
-      expirationMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2)]),
-      expirationYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)])
+      productionDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|[12][0-9]|3[01])\b")]),
+      productionMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|1[0-2])\b")]),
+      productionYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern("\b(199[0-9]|20[0-9][0-9])\b")]),
+      expirationDay: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|[12][0-9]|3[01])\b")]),
+      expirationMonth: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern("\b(0[1-9]|[1-9]|1[0-2])\b")]),
+      expirationYear: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern("\b(199[0-9]|20[0-9][0-9])\b")])
     });
 
     this.auth = auth;

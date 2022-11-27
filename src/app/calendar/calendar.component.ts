@@ -40,7 +40,6 @@ export class CalendarComponent implements OnInit {
   public callback(month: MonthComponent)
   {
     this.selectedDate = new Date((month.Month+1)+'/'+month.Selected+'/'+month.Year)
-    console.log(this.selectedDate)
   }
   get SelectedDate(): Date
   {
@@ -60,7 +59,6 @@ export class CalendarComponent implements OnInit {
     {
       this._Years.unshift(this._Years[0]-1)
     }
-    console.log(this._Years)
     this.ngOnInit()
   }
   public genNext()

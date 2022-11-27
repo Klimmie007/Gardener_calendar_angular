@@ -10,18 +10,45 @@ import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/c
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IPlant, PlantType } from '../_models/plantInterface';
+import { DateRange, IPlant, PlantType } from '../_models/plantInterface';
+import { Router } from 'express';
+import { BackendService } from '../backend.service';
+import { Plant } from '../_models/plant';
+import { Bush } from '../_models/bush';
+import { Tree } from '../_models/tree';
 
 @Component({
   selector: 'app-define-plant',
   templateUrl: './define-plant.component.html',
-  styleUrls: ['./define-plant.component.css']
+  styleUrls: ['./define-plant.component.css'],
+  providers: [BackendService]
 })
 export class DefinePlantComponent implements OnInit {
+  private _name: string = "";
+  public get name(): string {
+    return this._name;
+  }
+  public set name(value: string) {
+    this._name = value;
+  }
   private _sowingRange = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
+  private _minVegetationTime: number = 0;
+  public get minVegetationTime(): number {
+    return this._minVegetationTime;
+  }
+  public set minVegetationTime(value: number) {
+    this._minVegetationTime = value;
+  }
+  private _maxVegetationTime: number = 0;
+  public get maxVegetationTime(): number {
+    return this._maxVegetationTime;
+  }
+  public set maxVegetationTime(value: number) {
+    this._maxVegetationTime = value;
+  }
   public get sowingRange() {
     return this._sowingRange;
   }
@@ -64,30 +91,20 @@ export class DefinePlantComponent implements OnInit {
     this._plantTypes = value;
   }
   private icon: string = ""
+  private _image: string = "";
+  public get image(): string {
+    return this._image;
+  }
+  public set image(value: string) {
+    this._image = value;
+  }
   private iconError: string = ""
   private _dateRangeError: string = "";
   public get dateRangeError(): string {
     return this._dateRangeError;
   }
-  public set dateRangeError(value: string) {
-    this._dateRangeError = value;
-  }
-  private _sowingStartDate: Date = new Date;
-  public get sowingStartDate(): Date {
-    return this._sowingStartDate;
-  }
-  public set sowingStartDate(value: Date) {
-    this._sowingStartDate = value;
-  }
-  private _sowingEndDate: Date = new Date;
-  public get sowingEndDate(): Date {
-    return this._sowingEndDate;
-  }
-  public set sowingEndDate(value: Date) {
-    this._sowingEndDate = value;
-  }
   
-  constructor() {
+  constructor(private backend: BackendService) {
     this.sowingRange.valueChanges.subscribe({
       next: value => {
         if(value.start)
@@ -100,6 +117,14 @@ export class DefinePlantComponent implements OnInit {
     })
   }
 
+  private _imageError: string = "";
+  public get imageError(): string {
+    return this._imageError;
+  }
+  public set imageError(value: string) {
+    this._imageError = value;
+  }
+
   public get Icon(): string
   {
     return this.icon
@@ -109,14 +134,24 @@ export class DefinePlantComponent implements OnInit {
     this.icon = val
   }
 
-  public onLoad(event: Event)
+  public onLoadIcon(event: Event)
   {
     this.iconError = ""
   }
 
-  public onError(event: Event)
+  public onErrorIcon(event: Event)
   {
     this.iconError = "OwO"
+  }
+
+  public onLoadImage(event: Event)
+  {
+    this.imageError = ""
+  }
+
+  public onErrorImage(event: Event)
+  {
+    this.imageError = "OwO"
   }
 
   public get IconError(): string
@@ -127,7 +162,38 @@ export class DefinePlantComponent implements OnInit {
 
   public onSubmit()
   {
-
+    if(!this.sowingRange.value.end || !this.sowingRange.value.start)
+    {
+      return
+    }
+    let tmp: IPlant
+    switch(this.type)
+    {
+      case PlantType.Plant:
+      {
+        tmp = new Plant(new DateRange(this.sowingRange.value.start, this.sowingRange.value.end),  this.minVegetationTime, this.maxVegetationTime, this.expectedYield, this.name, this.image, this.Icon)
+        break;
+      }
+      case PlantType.Bush:
+      {
+        if(!this.yieldDateRange.value.start || !this.yieldDateRange.value.end)
+        {
+          return
+        }
+        tmp = new Bush(new DateRange(this.sowingRange.value.start, this.sowingRange.value.end),  new DateRange(this.yieldDateRange.value.start, this.yieldDateRange.value.end), this.expectedYield, this.name, this.image, this.Icon)
+        break
+      }
+      default:
+      {
+        if(!this.yieldDateRange.value.start || !this.yieldDateRange.value.end)
+        {
+          return
+        }
+        tmp = new Tree(new DateRange(this.sowingRange.value.start, this.sowingRange.value.end),  new DateRange(this.yieldDateRange.value.start, this.yieldDateRange.value.end), this.expectedYield, this.name, this.image, this.Icon)
+        break
+      }
+    }
+    this.backend.addPlant(tmp);
   }
 
   ngOnInit(): void {

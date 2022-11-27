@@ -2,22 +2,22 @@
   <mat-form-field appearance="fill">
     <mat-label>Plant type</mat-label>
     <pre></pre>
-    <mat-select>
+    <mat-select [(value)]="type">
       <mat-option *ngFor="let plant of plantTypes" [value]="plant">
         {{plant}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <pre></pre>
+  <pre></pre>
     <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
+      <div class="form-group">
 
-            <label for="icon">Icon URL</label><br>
+        <label for="icon">Name</label><br>
 
-            <input type="text" name="icon" [(ngModel)]="Icon" ng-model-options="{ getterSetter: true }" >
-            <div class="error">{{this.IconError}}</div>
-            <img id="icon" [src]="Icon" height="50" (load)="onLoad($event)" (error)="onError($event)">
-        </div>
+        <input type="text" name="name" [(ngModel)]="name" ng-model-options="{ getterSetter: true }" >
+      </div>
+      <pre></pre>
         <mat-form-field appearance="fill">
             <mat-label>Sowing Season</mat-label>
             <pre></pre>
@@ -30,7 +30,19 @@
           </mat-form-field>
           <pre></pre>
           <div *ngIf="type == PlantTypeEnum.Plant; else bushOrTree">
-            
+            <div class="form-group">
+
+              <label for="icon">Minimal vegetation time</label><br>
+  
+              <input type="text" name="minVegetationTime" [(ngModel)]="minVegetationTime" ng-model-options="{ getterSetter: true }" >
+            </div>
+            <pre></pre>
+            <div class="form-group">
+
+              <label for="icon">Maximal vegetation time</label><br>
+  
+              <input type="text" name="maxVegetationTime" [(ngModel)]="maxVegetationTime" ng-model-options="{ getterSetter: true }" >
+            </div>
           </div>
           <ng-template #bushOrTree>
             <mat-form-field appearance="fill">
@@ -44,6 +56,32 @@
               <mat-date-range-picker disabled="false" #picker [calendarHeaderComponent]="exampleHeader"></mat-date-range-picker>
             </mat-form-field>
           </ng-template>
+          <pre></pre>
+          <div class="form-group">
+
+            <label for="icon">Expected Yield (In Kg)</label><br>
+
+            <input type="text" name="expectedYield" [(ngModel)]="expectedYield" ng-model-options="{ getterSetter: true }" >
+          </div>
+          <pre></pre>
+          <div class="form-group">
+
+            <label for="icon">Icon URL</label><br>
+
+            <input type="text" name="icon" [(ngModel)]="Icon" ng-model-options="{ getterSetter: true }" >
+            <div class="error">{{this.IconError}}</div>
+            <img id="icon" [src]="Icon" height="50" (load)="onLoadIcon($event)" (error)="onErrorIcon($event)">
+        </div>
+          <pre></pre>
+          <div class="form-group">
+
+            <label for="icon">Image URL</label><br>
+
+            <input type="text" name="icon" [(ngModel)]="image" ng-model-options="{ getterSetter: true }" >
+            <div class="error">{{this.imageError}}</div>
+            <img id="icon" [src]="image" height="200" (load)="onLoadImage($event)" (error)="onErrorImage($event)">
+        </div>
+        <pre></pre>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
 </div>

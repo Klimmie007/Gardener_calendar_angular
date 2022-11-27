@@ -70,7 +70,6 @@ export class MonthComponent implements OnInit {
   }
   get Weeks(): number
   {
-    console.log(Math.ceil((this.TotalDays + this.startDay + 1)/7) + ' ' + this.month)
     return Math.ceil((this.TotalDays + this.startDay + 1)/7);
   }
   get DaysOfWeek() : string[]

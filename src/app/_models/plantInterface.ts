@@ -5,11 +5,14 @@ enum PlantType{
 }
 
 interface IPlant{
+    id: string
     name: string
     image: string
     icon: string
     sowingSeason: DateRange
+    expectedYieldInkg: number
     whenYields(date: Date): DateRange
+    toJSON(): Object
 }
 
 class DateRange{

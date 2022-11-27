@@ -1,4 +1,4 @@
-import { IPlant, DateRange } from "./plantInterface"
+import { IPlant, DateRange, PlantType } from "./plantInterface"
 
 export class Plant implements IPlant
 {
@@ -47,11 +47,12 @@ export class Plant implements IPlant
     }
     
 
-    constructor(sowSeason: DateRange, minVegetationTimeInDays: number, maxVegetationTimeInDays: number, name: string, image: string, icon: string)
+    constructor(sowSeason: DateRange, minVegetationTimeInDays: number, maxVegetationTimeInDays: number, expectedYieldInkg: number, name: string, image: string, icon: string)
     {
         this._sowingSeason = sowSeason
         this._minVegetationCycleInDays = minVegetationTimeInDays
         this._maxVegetationCycleInDays = maxVegetationTimeInDays
+        this._expectedYieldInkg = expectedYieldInkg
         this._name = name
         this._image = image
         this._icon = icon
@@ -62,5 +63,22 @@ export class Plant implements IPlant
     }
     public set sowingSeason(value: DateRange) {
         this._sowingSeason = value
+    }
+    toJSON(): Object {
+        return {sowingSeasonStart: this.sowingSeason.start, sowingSeasonEnd: this.sowingSeason.end, minVegetationCycleInDays: this.minVegetationCycleInDays, maxVegetationCycleInDays: this.maxVegetationCycleInDays, name: this.name, icon: this.icon, image: this.image, type: PlantType.Plant}
+    }
+    private _expectedYieldInkg: number
+    public get expectedYieldInkg(): number {
+        return this._expectedYieldInkg
+    }
+    public set expectedYieldInkg(value: number) {
+        this._expectedYieldInkg = value
+    }
+    private _id: string = ""
+    public get id(): string {
+        return this._id
+    }
+    public set id(value: string) {
+        this._id = value
     }
 }

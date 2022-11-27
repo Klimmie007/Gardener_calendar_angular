@@ -8,3 +8,4 @@ div[class~="error"]{
     font-size: 15px;
     opacity: 0.5;
 }
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';

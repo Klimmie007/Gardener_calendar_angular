@@ -30,6 +30,7 @@ import { WeatherComponent } from './weather/weather.component';
 import { FutureWeatherComponent } from './future-weather/future-weather.component';
 import { DefineGardenpatchComponent } from './define-gardenpatch/define-gardenpatch.component';
 import { GardenpatchesComponent } from './gardenpatches/gardenpatches.component';
+import { FahrenheitPipe } from './fahrenheit.pipe';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { GardenpatchesComponent } from './gardenpatches/gardenpatches.component'
     FutureWeatherComponent,
     DefineGardenpatchComponent,
     GardenpatchesComponent,
+    FahrenheitPipe,
   ],
   imports: [
     FormsModule,

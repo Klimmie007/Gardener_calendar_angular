@@ -12,6 +12,28 @@ export class CalendarComponent implements OnInit {
   private selectedDate: Date = new Date(NaN)
   private months: MonthComponent[] = []
   private _Years: number[] = [this.today.getFullYear()];
+  private celsius: boolean = true;
+  private fahrenheit: boolean = false;
+
+  get Celsius(): boolean {
+    return this.celsius;
+  }
+
+  get Fahrenheit(): boolean {
+    return this.fahrenheit;
+  }
+
+  changeTemp() {
+    if(this.celsius && !this.fahrenheit) {
+      this.celsius = false;
+      this.fahrenheit = true;
+    }
+    else {
+      this.celsius = true;
+      this.fahrenheit = false;
+    }
+  }
+
   public get Years(): number[] {
     return this._Years;
   }
@@ -66,7 +88,7 @@ export class CalendarComponent implements OnInit {
     this._Years.push(this._Years[this.Years.length-1]+1)
   }
   constructor() {
-    
+
   }
 
   ngOnInit(): void {

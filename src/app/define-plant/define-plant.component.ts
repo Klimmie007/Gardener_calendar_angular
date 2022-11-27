@@ -4,18 +4,20 @@ import {
   ChangeDetectorRef,
   Inject,
   OnDestroy,
+  Input,
 } from '@angular/core';
 import {MatCalendar} from '@angular/material/datepicker';
 import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateRange, IPlant, PlantType } from '../_models/plantInterface';
 import { Router } from 'express';
 import { BackendService } from '../backend.service';
 import { Plant } from '../_models/plant';
 import { Bush } from '../_models/bush';
 import { Tree } from '../_models/tree';
+import * as e from 'express';
 
 @Component({
   selector: 'app-define-plant',
@@ -24,29 +26,95 @@ import { Tree } from '../_models/tree';
   providers: [BackendService]
 })
 export class DefinePlantComponent implements OnInit {
+  @Input('list')
+  set list(list: IPlant[])
+  {
+    this._list = list
+  }
+  private _list: IPlant[] = [];
+
+  private _nameError: string = "Name is required";
+  public get nameError(): string {
+    return this._nameError;
+  }
+  public set nameError(value: string) {
+    this._nameError = value;
+  }
   private _name: string = "";
   public get name(): string {
     return this._name;
   }
   public set name(value: string) {
+    if(value == "")
+    {
+      this.nameError = "Name is required"
+    }
+    else
+    {
+      this.nameError = ""
+    }
     this._name = value;
   }
   private _sowingRange = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
+    start: new FormControl<Date | null>(null, [Validators.required]),
+    end: new FormControl<Date | null>(null, [Validators.required]),
   });
+  private _minVegetationTimeError: string = "The value has to be higher than 0";
+  public get minVegetationTimeError(): string {
+    return this._minVegetationTimeError;
+  }
+  public set minVegetationTimeError(value: string) {
+    this._minVegetationTimeError = value;
+  }
   private _minVegetationTime: number = 0;
   public get minVegetationTime(): number {
     return this._minVegetationTime;
   }
   public set minVegetationTime(value: number) {
+    let valString = (value as unknown) as string
+    if(valString.length == 0)
+    {
+      this.minVegetationTimeError = "value cannot be empty"
+    }
+    else if ((valString.match(/^[1-9][0-9]*$/g)?.length || 0) <= 0)
+    {
+      this._minVegetationTimeError = "value is not numeric"
+    }
+    else
+    {
+      this._minVegetationTimeError = ""
+    }
     this._minVegetationTime = value;
+  }
+  private _maxVegetationTimeError: string = "The value has to be higher than 0";
+  public get maxVegetationTimeError(): string {
+    return this._maxVegetationTimeError;
+  }
+  public set maxVegetationTimeError(value: string) {
+    this._maxVegetationTimeError = value;
   }
   private _maxVegetationTime: number = 0;
   public get maxVegetationTime(): number {
     return this._maxVegetationTime;
   }
   public set maxVegetationTime(value: number) {
+    let valString = (value as unknown) as string
+    if(valString.length == 0)
+    {
+      this.maxVegetationTimeError = "value cannot be empty"
+    }
+    else if ((valString.match(/^[1-9][0-9]*$/g)?.length || 0) <= 0)
+    {
+      this._maxVegetationTimeError = "value is not numeric"
+    }
+    else if(value < this.minVegetationTime)
+    {
+      this._maxVegetationTimeError = "max value has to be at least equal min value"
+    }
+    else
+    {
+      this._maxVegetationTimeError = ""
+    }
     this._maxVegetationTime = value;
   }
   public get sowingRange() {
@@ -56,8 +124,8 @@ export class DefinePlantComponent implements OnInit {
     this._sowingRange = value;
   }
   private _yieldDateRange = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
+    start: new FormControl<Date | null>(null, [Validators.required]),
+    end: new FormControl<Date | null>(null, [Validators.required]),
   });
   public get yieldDateRange() {
     return this._yieldDateRange;
@@ -65,11 +133,31 @@ export class DefinePlantComponent implements OnInit {
   public set yieldDateRange(value) {
     this._yieldDateRange = value;
   }
+  private _expectedYieldError: string = "value has to be higher than 0";
+  public get expectedYieldError(): string {
+    return this._expectedYieldError;
+  }
+  public set expectedYieldError(value: string) {
+    this._expectedYieldError = value;
+  }
   private _expectedYield: number = 0;
   public get expectedYield(): number {
     return this._expectedYield;
   }
   public set expectedYield(value: number) {
+    let valString = (value as unknown) as string
+    if(valString.length == 0)
+    {
+      this.expectedYieldError = "value cannot be empty"
+    }
+    else if ((valString.match(/^([1-9][0-9]*||[0-9]+\.[0-9]+)$/g)?.length || 0) <= 0)
+    {
+      this.expectedYieldError = "value is not numeric"
+    }
+    else
+    {
+      this.expectedYieldError = ""
+    }
     this._expectedYield = value;
   }
   public get PlantTypeEnum()
@@ -141,7 +229,7 @@ export class DefinePlantComponent implements OnInit {
 
   public onErrorIcon(event: Event)
   {
-    this.iconError = "OwO"
+    this.iconError = "The link does not lead to a valid image"
   }
 
   public onLoadImage(event: Event)
@@ -151,7 +239,7 @@ export class DefinePlantComponent implements OnInit {
 
   public onErrorImage(event: Event)
   {
-    this.imageError = "OwO"
+    this.imageError = "The link does not lead to a valid image"
   }
 
   public get IconError(): string
@@ -162,8 +250,34 @@ export class DefinePlantComponent implements OnInit {
 
   public onSubmit()
   {
+    if(this.imageError !== "")
+    {
+      alert(this.imageError)
+      return
+    }
+    if(this.iconError !== "")
+    {
+      alert(this.IconError)
+      return
+    }
     if(!this.sowingRange.value.end || !this.sowingRange.value.start)
     {
+      alert("sowing range is required")
+      return
+    }
+    if(this._expectedYieldError != "")
+    {
+      alert(this._expectedYieldError)
+      return
+    }
+    if(this.minVegetationTimeError != "" && this.type == PlantType.Plant)
+    {
+      alert(this.minVegetationTimeError)
+      return
+    }
+    if(this.maxVegetationTimeError != "" && this.type == PlantType.Plant)
+    {
+      alert(this.maxVegetationTimeError)
       return
     }
     let tmp: IPlant
@@ -178,6 +292,7 @@ export class DefinePlantComponent implements OnInit {
       {
         if(!this.yieldDateRange.value.start || !this.yieldDateRange.value.end)
         {
+          alert('yield dates are required')
           return
         }
         tmp = new Bush(new DateRange(this.sowingRange.value.start, this.sowingRange.value.end),  new DateRange(this.yieldDateRange.value.start, this.yieldDateRange.value.end), this.expectedYield, this.name, this.image, this.Icon)
@@ -187,12 +302,14 @@ export class DefinePlantComponent implements OnInit {
       {
         if(!this.yieldDateRange.value.start || !this.yieldDateRange.value.end)
         {
+          alert('yield dates are required')
           return
         }
         tmp = new Tree(new DateRange(this.sowingRange.value.start, this.sowingRange.value.end),  new DateRange(this.yieldDateRange.value.start, this.yieldDateRange.value.end), this.expectedYield, this.name, this.image, this.Icon)
         break
       }
     }
+    this._list.push(tmp)
     this.backend.addPlant(tmp);
   }
 

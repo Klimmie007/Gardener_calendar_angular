@@ -5,12 +5,15 @@
             {{plant.name}}
             Sowing season: {{dateWithoutYear(plant.sowingSeason.start)}}-{{dateWithoutYear(plant.sowingSeason.end)}}
             Expected yield: {{plant.expectedYieldInkg}} kilograms
-            <div *ngIf="isPlant(plant); else bushOrTree"> 
+            <b *ngIf="isPlant(plant); else bushOrTree"> 
                 in {{dateSubtraction(plant, true)}} to {{dateSubtraction(plant, false)}} days
-            </div>
+            </b>
             <ng-template #bushOrTree>
-                between {{dateWithoutYear(plant.whenYields(plant.sowingSeason.start).start)}} and {{dateWithoutYear(plant.whenYields(plant.sowingSeason.start).end)}}
+                <b>
+                    between {{dateWithoutYear(plant.whenYields(plant.sowingSeason.start).start)}} and {{dateWithoutYear(plant.whenYields(plant.sowingSeason.start).end)}}
+                </b>
             </ng-template>
         </div>
     <hr>
 </div>
+<app-define-plant [list]="plants"></app-define-plant>

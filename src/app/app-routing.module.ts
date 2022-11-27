@@ -20,8 +20,7 @@ const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "preserve", component: PreserveComponent, canActivate: [AuthGuard]},
   //{path: "define-preserve", component: DefinePreserveComponent},
-  {path: "calendar", component: CalendarComponent},
-  {path: "plant", component: DefinePlantComponent},
+  {path: "calendar", component: CalendarComponent}, 
   {path: "gardenpatches", component: GardenpatchesComponent},
   {path: "plant", component: PlantsComponent},
   {path: "", redirectTo: "register", pathMatch: "full"}

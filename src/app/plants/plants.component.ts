@@ -22,6 +22,13 @@ export class PlantsComponent implements OnInit {
 
   constructor(private backend: BackendService) { 
     this._plants = backend.getPlants()
+    console.log(this._plants)
+  }
+
+  public addPlant(plant: IPlant)
+  {
+    this._plants.push(plant);
+    this.ngOnInit()
   }
 
   ngOnInit(): void {

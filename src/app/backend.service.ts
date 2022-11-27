@@ -169,14 +169,14 @@ export class BackendService {
           }
           case PlantType.Bush:
           {
-            let tmp: Bush = new Bush(new DateRange(plant.sowingSeasonStart, plant.sowingSeasonEnd), new DateRange(plant.yieldSeasonStart, plant.yieldSeasonEnd),  plant.expectedYieldInkg, plant.name, plant.image, plant.icon)
+            let tmp: Bush = new Bush(new DateRange(new Date (plant.sowingSeasonStart), new Date (plant.sowingSeasonEnd)), new DateRange(new Date (plant.yieldSeasonStart), new Date (plant.yieldSeasonEnd)),  plant.expectedYieldInkg, plant.name, plant.image, plant.icon)
             tmp.id = plant._id
             retVal.push(tmp)
             break;
           }
           case PlantType.Tree:
           {
-            let tmp: Tree = new Tree(new DateRange(plant.sowingSeasonStart, plant.sowingSeasonEnd), new DateRange(plant.yieldSeasonStart, plant.yieldSeasonEnd), plant.expectedYieldInkg, plant.name, plant.image, plant.icon)
+            let tmp: Tree = new Tree(new DateRange(new Date (plant.sowingSeasonStart), new Date (plant.sowingSeasonEnd)), new DateRange(new Date (plant.yieldSeasonStart), new Date (plant.yieldSeasonEnd)), plant.expectedYieldInkg, plant.name, plant.image, plant.icon)
             tmp.id = plant._id
             retVal.push(tmp)
             break;

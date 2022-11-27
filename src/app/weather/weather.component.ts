@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { WeatherService } from '../weather.service';
 
 @Component({
@@ -11,6 +11,7 @@ export class WeatherComponent implements OnInit {
   private weatherNow: any;
   private currentTime = new Date();
   private location: any;
+  @Input() changeTemp: boolean = false;
 
   constructor(private weatherService: WeatherService) { }
 

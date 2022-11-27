@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { pluck } from 'rxjs';
 import { WeatherService } from '../weather.service';
 
@@ -9,6 +9,7 @@ import { WeatherService } from '../weather.service';
 })
 export class FutureWeatherComponent implements OnInit {
   private weatherData: any = [];
+  @Input() changeTemp: boolean = false;
 
   constructor(private weatherService: WeatherService) { }
 

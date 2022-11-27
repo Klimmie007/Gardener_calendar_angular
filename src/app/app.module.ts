@@ -29,6 +29,7 @@ import { HighlightDirective } from './highlight.directive';
 import { WeatherComponent } from './weather/weather.component';
 import { FutureWeatherComponent } from './future-weather/future-weather.component';
 import { DefineGardenpatchComponent } from './define-gardenpatch/define-gardenpatch.component';
+import { GardenpatchesComponent } from './gardenpatches/gardenpatches.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { DefineGardenpatchComponent } from './define-gardenpatch/define-gardenpa
     WeatherComponent,
     FutureWeatherComponent,
     DefineGardenpatchComponent,
+    GardenpatchesComponent,
   ],
   imports: [
     FormsModule,

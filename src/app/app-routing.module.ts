@@ -8,6 +8,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { DefineGardenpatchComponent } from './define-gardenpatch/define-gardenpatch.component';
 import { DefinePlantComponent } from './define-plant/define-plant.component';
 import { DefinePreserveComponent } from './define-preserve/define-preserve.component';
+import { GardenpatchesComponent } from './gardenpatches/gardenpatches.component';
 import { LoginComponent } from './login/login.component';
 import { PreserveComponent } from './preserve/preserve.component';
 import { RegisterComponent } from './register/register.component';
@@ -17,10 +18,10 @@ const routes: Routes = [
   {path: "account", component: AccountComponent, canActivate: [AuthGuard]},
   {path: "login", component: LoginComponent},
   {path: "preserve", component: PreserveComponent, canActivate: [AuthGuard]},
-  {path: "define-preserve", component: DefinePreserveComponent},
+  //{path: "define-preserve", component: DefinePreserveComponent},
   {path: "calendar", component: CalendarComponent},
   {path: "plant", component: DefinePlantComponent},
-  {path: "patch", component: DefineGardenpatchComponent},
+  {path: "gardenpatches", component: GardenpatchesComponent},
   {path: "", redirectTo: "register", pathMatch: "full"}
 ];
 

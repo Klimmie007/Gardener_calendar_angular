@@ -19,6 +19,12 @@ interface Preserve {
   expirationDate: Date;
 }
 
+interface GardenPatch {
+  name: string;
+  type: string;
+  amount: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -85,5 +91,9 @@ export class BackendService {
   // Garden Patch
   public addGardenPatch(gardenPatch: Object): Observable<Object> {
     return this.http.post<Object>(this._gardenPatchesURL, gardenPatch);
+  }
+
+  public getGardenPatches(): Observable<Array<GardenPatch>> {
+    return this.http.get<Array<GardenPatch>>(this._gardenPatchesURL);
   }
 }

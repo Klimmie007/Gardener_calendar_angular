@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from './account/account.component';
 import { AuthGuard } from './auth.guard';
 import { CalendarComponent } from './calendar/calendar.component';
+import { DefineGardenpatchComponent } from './define-gardenpatch/define-gardenpatch.component';
 import { DefinePlantComponent } from './define-plant/define-plant.component';
 import { DefinePreserveComponent } from './define-preserve/define-preserve.component';
 import { LoginComponent } from './login/login.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: "define-preserve", component: DefinePreserveComponent},
   {path: "calendar", component: CalendarComponent},
   {path: "plant", component: DefinePlantComponent},
+  {path: "patch", component: DefineGardenpatchComponent},
   {path: "", redirectTo: "register", pathMatch: "full"}
 ];
 

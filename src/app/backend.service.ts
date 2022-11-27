@@ -27,6 +27,7 @@ export class BackendService {
   private _loginURL: string = "http://localhost:3000/api/login"
   private _userURL: string = "http://localhost:3000/api/user"
   private _preservesURL: string = "http://localhost:3000/api/preserves"
+  private _gardenPatchesURL: string = "http://localhost:3000/api/gardenPatches"
   private _emailURL: string = this._userURL + "/email"
   private _nicknameURL: string =  this._userURL + "/nickname"
   private _passwordURL: string = this._userURL + "/password"
@@ -79,5 +80,10 @@ export class BackendService {
 
   public getPreserves(): Observable<Array<Preserve>> {
     return this.http.get<Array<Preserve>>(this._preservesURL);
+  }
+
+  // Garden Patch
+  public addGardenPatch(gardenPatch: Object): Observable<Object> {
+    return this.http.post<Object>(this._gardenPatchesURL, gardenPatch);
   }
 }

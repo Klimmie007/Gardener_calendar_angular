@@ -1,0 +1,14 @@
+<div>
+  <p>Define your garden patch</p>
+  <form [formGroup]="FormModel" (ngSubmit)="defineGardenPatch(FormModel)" (ngSubmit)="resetForm(FormModel)">
+    <label>Name: </label>
+    <input placeholder="Your's garden patch name" type="text" formControlName="name" required/><br>
+    <label>Type: </label>
+    <select name="types" formControlName="type" required>
+      <option *ngFor="let type of Types" value="{{type}}">{{type}}</option>
+    </select><br>
+    <label>Amount: </label>
+    <input type="number" formControlName="amount" min="1" required/>
+    <button type="submit">Submit</button>
+  </form>
+</div>

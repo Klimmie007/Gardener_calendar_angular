@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const Preserve = require('../models/preserve')
+const GardenPatch = require('../models/gardenPatch')
 const mongoose = require('mongoose')
 const db = "mongodb+srv://Klimmie:9ZIxkdcqbt3MTuUx@gardener.8ybqtxn.mongodb.net/test"
 const bcrypt = require('bcrypt')
@@ -200,10 +201,10 @@ router.post('/preserves', (req, res) => {
 
   preserve.save((error, newPreserve) =>{
     if(error){
-        console.error(error)
+        console.error(error);
     }
     else{
-        res.status(200).send({newPreserve})
+        res.status(200).send({newPreserve});
     }
   });
 });
@@ -216,6 +217,20 @@ router.get('/preserves', async (req, res) => {
   catch(error) {
     res.status(500).json({message: error.message});
   }
+});
+
+router.post('/gardenPatches', (req, res) => {
+  let gardenPatchData = req.body;
+  let gardenPatch = new GardenPatch(gardenPatchData);
+
+  gardenPatch.save((error, newGardenPatch) => {
+    if(error) {
+      console.log(error);
+    }
+    else {
+      res.status(200).send({newGardenPatch});
+    }
+  });
 });
 
 module.exports = router

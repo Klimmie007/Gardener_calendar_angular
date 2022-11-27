@@ -1,4 +1,4 @@
-import { DateRange, IPlant } from "./plantInterface";
+import { DateRange, IPlant, PlantType } from "./plantInterface";
 
 export class Bush implements IPlant
 {
@@ -34,12 +34,39 @@ export class Bush implements IPlant
     whenYields(date: Date): DateRange {
         return this.yieldSeason
     }
-    constructor(sowSeason: DateRange, yieldSeason: DateRange, name: string, image: string, icon: string)
+    constructor(sowSeason: DateRange, yieldSeason: DateRange, expectedYieldInkg: number, name: string, image: string, icon: string)
     {
         this._sowingSeason = sowSeason
         this.yieldSeason = yieldSeason
+        this._expectedYieldInkg = expectedYieldInkg
         this._name = name
         this._icon = icon
         this._image = image
+    }
+
+    public toJSON(): Object {
+        return {sowingSeasonStart: this.sowingSeason.start, 
+            sowingSeasonEnd: this.sowingSeason.end, 
+            yieldSeasonStart: this.yieldSeason.start, 
+            yieldSeasonEnd: this.yieldSeason.end, 
+            name: this.name, 
+            icon: this.icon, 
+            image: this.image, 
+            type: PlantType.Bush}
+    }
+
+    private _expectedYieldInkg: number;
+    public get expectedYieldInkg(): number {
+        return this._expectedYieldInkg;
+    }
+    public set expectedYieldInkg(value: number) {
+        this._expectedYieldInkg = value;
+    }
+    private _id: string = ""
+    public get id(): string {
+        return this._id
+    }
+    public set id(value: string) {
+        this._id = value
     }
 }

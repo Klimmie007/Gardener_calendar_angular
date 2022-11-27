@@ -3,10 +3,12 @@ const router = express.Router()
 const User = require('../models/user')
 const Preserve = require('../models/preserve')
 const GardenPatch = require('../models/gardenPatch')
+const Plant = require('../models/plant')
 const mongoose = require('mongoose')
 const db = "mongodb+srv://Klimmie:9ZIxkdcqbt3MTuUx@gardener.8ybqtxn.mongodb.net/test"
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+
 
 const saltRounds = 10
 const secretKey= "IHateJavaScript"
@@ -242,5 +244,51 @@ router.get('/gardenPatches', async (req, res) => {
     res.status(500).json({message: error.message});
   }
 });
+
+router.post('/plant', (req, res) => {
+    let plantData = req.body
+    let plant = new Plant(plantData)
+
+    plant.save((error, newPlant) => {
+        if(error || !newPlant){
+            res.status(400).send("what the fuck")
+        }
+        else(
+            res.status(200).send({newPlant})
+        )
+    })
+})
+
+router.get('/plant', async (req, res) => {
+    try {
+        const data = await Plant.find();
+        res.json(data);
+      }
+      catch(error) {
+        res.status(500).json({message: error.message});
+      }
+})
+
+router.post('/plant/id', (req, res) => {
+    reqBody = req.body
+    Plant.findById({_id: reqBody.id}, (error, plant) => {
+        if(error || !newPlant){
+            res.status(404).send("no plant with specified ID found")
+        } else {
+            res.status(200).send({plant})
+        }
+    })
+})
+
+router.get('/plant/date/sow', (req, res) => {
+    date = req.body.date
+    Plant.find({sowingSeasonStart: {$lt: date}, sowingSeasonEnd: {$gt: date}}, (error, plants) =>{
+        if(error || !plants){
+            res.status(404).send(error.message)
+        } else {
+            res.status(500).json(plants)
+        }
+    })
+})
 
 module.exports = router

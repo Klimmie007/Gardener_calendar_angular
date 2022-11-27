@@ -1,1 +1,16 @@
-<p>plants works!</p>
+<div *ngFor="let plant of plants" >
+    <hr>
+        <div>
+            <img [src]="plant.icon" height="50">
+            {{plant.name}}
+            Sowing season: {{dateWithoutYear(plant.sowingSeason.start)}}-{{dateWithoutYear(plant.sowingSeason.end)}}
+            Expected yield: {{plant.expectedYieldInkg}} kilograms
+            <div *ngIf="isPlant(plant); else bushOrTree"> 
+                in {{dateSubtraction(plant, true)}} to {{dateSubtraction(plant, false)}} days
+            </div>
+            <ng-template #bushOrTree>
+                between {{dateWithoutYear(plant.whenYields(plant.sowingSeason.start).start)}} and {{dateWithoutYear(plant.whenYields(plant.sowingSeason.start).end)}}
+            </ng-template>
+        </div>
+    <hr>
+</div>

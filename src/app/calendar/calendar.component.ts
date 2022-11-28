@@ -1,17 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../backend.service';
 import { DayComponent } from '../day/day.component';
 import { MonthComponent } from '../month/month.component';
+import { IPlant } from '../_models/plantInterface';
+import { SowedPlant } from '../_models/sowedPlant';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
+  providers: [BackendService]
 })
 export class CalendarComponent implements OnInit {
   private today: Date = new Date;
   private selectedDate: Date = new Date(NaN)
   private months: MonthComponent[] = []
   private _Years: number[] = [this.today.getFullYear()];
+  private _plants: IPlant[] = [];
+  public get plants(): IPlant[] {
+    return this._plants;
+  }
+  public set plants(value: IPlant[]) {
+    this._plants = value;
+  }
+  private _sowedPlants: SowedPlant[] = [];
+  public get sowedPlants(): SowedPlant[] {
+    return this._sowedPlants;
+  }
+  public set sowedPlants(value: SowedPlant[]) {
+    this._sowedPlants = value;
+  }
   public get Years(): number[] {
     return this._Years;
   }
@@ -65,8 +83,9 @@ export class CalendarComponent implements OnInit {
   {
     this._Years.push(this._Years[this.Years.length-1]+1)
   }
-  constructor() {
-    
+  constructor(private backend: BackendService) {
+    this.plants = backend.getPlants()
+    this.sowedPlants = backend.getSowedPlants()
   }
 
   ngOnInit(): void {

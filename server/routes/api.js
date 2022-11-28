@@ -4,6 +4,8 @@ const User = require('../models/user')
 const Preserve = require('../models/preserve')
 const GardenPatch = require('../models/gardenPatch')
 const Plant = require('../models/plant')
+const Harvest = require('../models/harvest')
+const SowedPlant = require('../models/sowedPlant')
 const mongoose = require('mongoose')
 const db = "mongodb+srv://Klimmie:9ZIxkdcqbt3MTuUx@gardener.8ybqtxn.mongodb.net/test"
 const bcrypt = require('bcrypt')
@@ -289,6 +291,63 @@ router.get('/plant/date/sow', (req, res) => {
             res.status(500).json(plants)
         }
     })
+})
+
+router.put('/sowedPlant', (req, res) => {
+    let sowedPlantData = req.body
+    let sowedPlant = new SowedPlant(sowedPlantData)
+
+    sowedPlant.save((error, newSowedPlant) => {
+        if(error || !newSowedPlant){
+            res.status(400).send("what the fuck")
+        }
+        else{
+            res.status(204)
+        }
+    })
+})
+
+router.get('/sowedPlant', async (req, res) => {
+    try {
+        const data = await SowedPlant.find().populate("plantID").populate("gardenPatchID");
+        res.json(data);
+      }
+      catch(error) {
+        res.status(500).json({message: error.message});
+      }
+})
+
+router.post('/sowedPlant/remove', (req, res) => {
+    SowedPlant.findByIdAndRemove({_id: req.body.id}, (err, doc) =>{
+        if(!err && doc != null)
+            res.status(204)
+        else
+            res.status(404).send(req.body.id)
+    })
+})
+
+router.put('/harvest', (req, res) => {
+    let harvestData = req.body
+    let harvest = new Harvest(harvestData)
+
+    harvest.save((error, newSowedPlant) => {
+        if(error || !newSowedPlant){
+            res.status(400).send("what the fuck")
+        }
+        else{
+            res.status(204)
+        }
+    })
+})
+
+router.get('/harvest', async (req, res) => {
+    try {
+        const data = await Harvest.find().populate("plant");
+        res.json(data);
+      }
+      catch(error) {
+        res.status(500).json({message: error.message});
+      }
 })
 
 module.exports = router

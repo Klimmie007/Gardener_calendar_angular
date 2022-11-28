@@ -1,0 +1,9 @@
+<div *ngFor="let harvest of harvestList" [appHighlight]="color">
+  <hr>
+    <p>
+      Waga zbioru: {{harvest.weight}}<br>
+      Data zbioru: {{harvest.harvestDate | date: 'mediumDate'}}<br>
+      {{harvest.harvestedPlant}}<br>
+    </p>
+  <hr>
+</div>

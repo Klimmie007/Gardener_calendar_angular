@@ -47,7 +47,7 @@ export class Plant implements IPlant
     }
     
 
-    constructor(sowSeason: DateRange, minVegetationTimeInDays: number, maxVegetationTimeInDays: number, expectedYieldInkg: number, name: string, image: string, icon: string)
+    constructor(sowSeason: DateRange, minVegetationTimeInDays: number, maxVegetationTimeInDays: number, expectedYieldInkg: number, name: string, image: string, icon: string, id: string = "")
     {
         this._sowingSeason = sowSeason
         this._minVegetationCycleInDays = minVegetationTimeInDays
@@ -56,6 +56,7 @@ export class Plant implements IPlant
         this._name = name
         this._image = image
         this._icon = icon
+        this._id = id
     }
     private _sowingSeason: DateRange
     public get sowingSeason(): DateRange {

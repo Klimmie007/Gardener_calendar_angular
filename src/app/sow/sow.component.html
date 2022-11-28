@@ -1,0 +1,36 @@
+<div>
+    <mat-form-field appearance="fill">
+        <mat-label>Patch</mat-label>
+        <pre></pre>
+        <mat-select [(value)]="chosenPatch">
+          <mat-option *ngFor="let patch of patches" [value]="patch">
+            {{patch.Name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Plant</mat-label>
+        <pre></pre>
+        <mat-select [(value)]="chosenPlant">
+          <mat-option *ngFor="let plant of plants" [value]="plant">
+            {{plant.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox class="example-margin" [(ngModel)]="isToday" ng-model-options="{ getterSetter: true }">Sowed today?</mat-checkbox>
+      <br>
+      <div class="error">{{this.Error}}</div>
+      <div>{{getTypeAsString(chosenPlant)}}{{chosenPatch?.Type}}</div>
+      <img [src]="chosenPlant?.icon" height="50">
+      <div *ngIf="!isToday">
+        <mat-form-field appearance="fill">
+            <mat-label>Sow Date</mat-label>
+            <pre></pre>
+              <input matInput disabled [matDatepicker]="picker" [(ngModel)]="date">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker disabled="false" #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+      <br>
+      <button (click)="OnSubmit()">Submit</button>
+</div>

@@ -34,7 +34,7 @@ export class Bush implements IPlant
     whenYields(date: Date): DateRange {
         return this.yieldSeason
     }
-    constructor(sowSeason: DateRange, yieldSeason: DateRange, expectedYieldInkg: number, name: string, image: string, icon: string)
+    constructor(sowSeason: DateRange, yieldSeason: DateRange, expectedYieldInkg: number, name: string, image: string, icon: string, id: string = "")
     {
         this._sowingSeason = sowSeason
         this.yieldSeason = yieldSeason
@@ -42,6 +42,7 @@ export class Bush implements IPlant
         this._name = name
         this._icon = icon
         this._image = image
+        this._id = id
     }
 
     public toJSON(): Object {
@@ -62,7 +63,7 @@ export class Bush implements IPlant
     public set expectedYieldInkg(value: number) {
         this._expectedYieldInkg = value;
     }
-    private _id: string = ""
+    private _id: string
     public get id(): string {
         return this._id
     }

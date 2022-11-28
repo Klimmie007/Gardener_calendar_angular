@@ -2,11 +2,14 @@ export class GardenPatch {
   private name: string;
   private type: string;
   private amount: number;
+  private _id: string;
+  
 
-  constructor(name: string, type: string, amount: number) {
+  constructor(name: string, type: string, amount: number, id: string="") {
     this.name = name;
     this.type = type;
     this.amount = amount;
+    this._id = id;
   }
 
   get Name(): string {
@@ -31,6 +34,13 @@ export class GardenPatch {
 
   set Amount(amount: number) {
     this.amount = amount;
+  }
+
+  public get id(): string {
+    return this._id;
+  }
+  public set id(value: string) {
+    this._id = value;
   }
 
   public toJson(): Object {

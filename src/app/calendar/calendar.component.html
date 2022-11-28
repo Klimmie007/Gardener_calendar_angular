@@ -7,7 +7,7 @@
         <tbody *ngFor="let month of [].constructor(12-(year == Years[0] ? Month : 0)), let i = index">
             <app-month #thismonth [FirstDay]="getStartDay((year == Years[0] ? Month : 0)+i, year)" [Month]="(year == Years[0] ? Month : 0)+i" [Year]="year" (click)="this.callback(thismonth)" [IsSelected]="(year == Years[0] ? Month : 0)+i == SelectedDate.getMonth()"></app-month>
             <div *ngIf="this.IsValidDate && year == SelectedDate.getFullYear() && Month+i == SelectedDate.getMonth()">
-                Placeholder for a proper day component
+                <app-proper-day [crops]="sowedPlants" [plants]="plants" [day]="SelectedDate"></app-proper-day>
             </div>
         </tbody>
     </table>

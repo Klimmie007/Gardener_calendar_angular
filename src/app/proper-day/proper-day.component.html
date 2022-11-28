@@ -1,0 +1,18 @@
+<div>
+    {{day | date}}
+    <div *ngIf="plantsToPlant().length > 0">
+    At this day you should plant:<div *ngFor="let plant of plantsToPlant()">
+        <img [src]="plant" height="50">
+    </div>
+    </div>
+    <div *ngIf="plantsInSeason().length > 0">
+    It's a planting season for planting:<div *ngFor="let plant of plantsInSeason()">
+        <img [src]="plant" height="50">
+    </div>
+    </div>
+    <div *ngIf="cropsToHarvest().length > 0">
+    It's about time for you to harvest:<div *ngFor="let plant of cropsToHarvest()">
+        <img [src]="plant" height="50">
+    </div>
+    </div>
+</div>

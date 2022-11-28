@@ -1,0 +1,12 @@
+<div *ngFor="let crop of sowedPlants, let i = index">
+    <img [src]="crop.plant.icon" height="50">
+    {{crop.plant.name}}
+    Sowed on {{crop.date | date}} at {{crop.gardenPatch.Name    }}
+    Expected Yields between {{crop.plant.whenYields(crop.date).start | date}} and {{crop.plant.whenYields(crop.date).end | date}}
+    <button (click)="Click(i)">Harvest</button>
+    <b *ngIf="i == index">
+        <app-define-harvest [crops]="sowedPlants" [index]="i"></app-define-harvest>
+    </b>
+    <hr>
+</div>
+<app-sow [list]="sowedPlants"></app-sow>

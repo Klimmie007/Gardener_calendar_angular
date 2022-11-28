@@ -3,6 +3,7 @@ export class Preserve {
   private description: string;
   private dateOfProduction: Date;
   private expirationDate: Date;
+  private _id: string = "";
 
   constructor(name: string, description: string, dateOfProduction: Date, expirationDate: Date) {
     this.name = name;
@@ -40,6 +41,13 @@ export class Preserve {
 
   set ExpirationDate(date: Date) {
     this.expirationDate = date;
+  }
+
+  public get id(): string {
+    return this._id;
+  }
+  public set id(value: string) {
+    this._id = value;
   }
 
   public toJSON(): Object {

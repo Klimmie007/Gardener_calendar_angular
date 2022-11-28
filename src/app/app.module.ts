@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +31,11 @@ import { WeatherComponent } from './weather/weather.component';
 import { FutureWeatherComponent } from './future-weather/future-weather.component';
 import { DefineGardenpatchComponent } from './define-gardenpatch/define-gardenpatch.component';
 import { GardenpatchesComponent } from './gardenpatches/gardenpatches.component';
+import { SowComponent } from './sow/sow.component';
+import { HarvestComponent } from './harvest/harvest.component';
+import { DefineHarvestComponent } from './define-harvest/define-harvest.component';
+import { CropsComponent } from './crops/crops.component';
+import { ProperDayComponent } from './proper-day/proper-day.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +55,11 @@ import { GardenpatchesComponent } from './gardenpatches/gardenpatches.component'
     FutureWeatherComponent,
     DefineGardenpatchComponent,
     GardenpatchesComponent,
+    SowComponent,
+    HarvestComponent,
+    DefineHarvestComponent,
+    CropsComponent,
+    ProperDayComponent
   ],
   imports: [
     FormsModule,
@@ -63,7 +74,8 @@ import { GardenpatchesComponent } from './gardenpatches/gardenpatches.component'
     BrowserAnimationsModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   exports: [
     CommonModule,

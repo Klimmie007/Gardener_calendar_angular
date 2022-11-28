@@ -7,6 +7,9 @@ import { isNgTemplate } from '@angular/compiler';
 import { Plant } from './_models/plant';
 import { Bush } from './_models/bush';
 import { Tree } from './_models/tree';
+import { Harvest } from './_models/harvest';
+import { SowedPlant } from './_models/sowedPlant';
+import { GardenPatch } from './_models/gardenPatch';
 
 interface token{
   token: string
@@ -24,10 +27,11 @@ interface Preserve {
   expirationDate: Date;
 }
 
-interface GardenPatch {
+interface IGardenPatch {
   name: string;
   type: string;
   amount: number;
+  _id: string
 }
 
 interface IPlantBackend {
@@ -44,6 +48,21 @@ interface IPlantBackend {
   expectedYieldInkg: number,
   type: string,
 }
+
+interface sowedPlantBackend{
+  _id: string,
+  gardenPatchID: IGardenPatch,
+  plantID: IPlantBackend,
+  dateSowed: Date
+}
+
+interface harvestBackend{
+  _id: string,
+  weight: number,
+  plant: IPlantBackend,
+  harvestDate: Date
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,6 +73,9 @@ export class BackendService {
   private _preservesURL: string = "http://localhost:3000/api/preserves"
   private _gardenPatchesURL: string = "http://localhost:3000/api/gardenPatches"
   private _plantsURL: string = "http://localhost:3000/api/plant"
+  private _harvestURL: string  = "http://localhost:3000/api/harvest"
+  private _sowPlantURL: string = "http://localhost:3000/api/sowedPlant"
+  private _sowPlantRemoveURL: string = this._sowPlantURL + "/remove"
   private _emailURL: string = this._userURL + "/email"
   private _nicknameURL: string =  this._userURL + "/nickname"
   private _passwordURL: string = this._userURL + "/password"
@@ -115,8 +137,8 @@ export class BackendService {
     return this.http.post<Object>(this._gardenPatchesURL, gardenPatch);
   }
 
-  public getGardenPatches(): Observable<Array<GardenPatch>> {
-    return this.http.get<Array<GardenPatch>>(this._gardenPatchesURL);
+  public getGardenPatches(): Observable<Array<IGardenPatch>> {
+    return this.http.get<Array<IGardenPatch>>(this._gardenPatchesURL);
   }
   //plant
   public addPlant(plant: IPlant) : IPlant | null {
@@ -254,6 +276,101 @@ export class BackendService {
         });
       }
     )
+    return retVal
+  }
+
+  //Harvest
+  public addHarvest(harvest: Harvest, cropID: string) {
+    console.log(cropID)
+    this.http.post<SowedPlant>(this._sowPlantRemoveURL, {id: cropID}).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
+    return this.http.put<Harvest>(this._harvestURL, harvest.toJSON());
+  }
+
+  public getHarvest(): Harvest[] {
+    let retVal: Harvest[] = []
+    this.http.get<Array<harvestBackend>>(this._harvestURL).subscribe(
+      res => {
+        res.forEach(plant => {
+          switch(plant.plant.type)
+        {
+          case PlantType.Plant:
+          {
+            let tmp: Plant = new Plant(new DateRange(plant.plant.sowingSeasonStart, plant.plant.sowingSeasonEnd), plant.plant.minVegetationCycleInDays, plant.plant.maxVegetationCycleInDays, plant.plant.expectedYieldInkg, plant.plant.name, plant.plant.image, plant.plant.icon)
+            tmp.id = plant._id
+            retVal.push(new Harvest(plant.weight, tmp, new Date(plant.harvestDate), plant._id))
+            break;
+          }
+          case PlantType.Bush:
+          {
+            let tmp: Bush = new Bush(new DateRange(plant.plant.sowingSeasonStart, plant.plant.sowingSeasonEnd), new DateRange(plant.plant.yieldSeasonStart, plant.plant.yieldSeasonEnd), plant.plant.expectedYieldInkg, plant.plant.name, plant.plant.image, plant.plant.icon)
+            tmp.id = plant._id
+            retVal.push(new Harvest(plant.weight, tmp, new Date(plant.harvestDate), plant._id))
+            break;
+          }
+          case PlantType.Tree:
+          {
+            let tmp: Tree = new Tree(new DateRange(plant.plant.sowingSeasonStart, plant.plant.sowingSeasonEnd), new DateRange(plant.plant.yieldSeasonStart, plant.plant.yieldSeasonEnd), plant.plant.expectedYieldInkg, plant.plant.name, plant.plant.image, plant.plant.icon)
+            tmp.id = plant._id
+            retVal.push(new Harvest(plant.weight, tmp, new Date(plant.harvestDate), plant._id))
+            break;
+          }
+        }
+        });
+      }
+    )
+    return retVal
+  }
+
+  //SowedPlants
+  public addSowedPlant(sowedPlant: SowedPlant): boolean
+  {
+    let tmp: boolean = false
+    this.http.put<sowedPlantBackend>(this._sowPlantURL, sowedPlant.toJSON()).subscribe(
+      res => {
+        tmp = true;
+      }
+    )
+    return tmp
+  }
+
+  public getSowedPlants(): SowedPlant[]
+  {
+    let retVal: SowedPlant[] = []
+    this.http.get<Array<sowedPlantBackend>>(this._sowPlantURL).subscribe(
+      res => {
+        console.log(res)
+        res.forEach(sowedPlant => {
+          console.log(sowedPlant)
+          let tmpPatch: GardenPatch = new GardenPatch(sowedPlant.gardenPatchID.name, sowedPlant.gardenPatchID.type, sowedPlant.gardenPatchID.amount, sowedPlant.gardenPatchID._id)
+          switch(sowedPlant.plantID.type)
+        {
+          case PlantType.Plant:
+          {
+            let tmp: Plant = new Plant(new DateRange(sowedPlant.plantID.sowingSeasonStart, sowedPlant.plantID.sowingSeasonEnd), sowedPlant.plantID.minVegetationCycleInDays, sowedPlant.plantID.maxVegetationCycleInDays, sowedPlant.plantID.expectedYieldInkg, sowedPlant.plantID.name, sowedPlant.plantID.image, sowedPlant.plantID.icon)
+            tmp.id = sowedPlant.plantID._id
+            retVal.push(new SowedPlant(tmpPatch, tmp, new Date(sowedPlant.dateSowed), sowedPlant._id))
+            break;
+          }
+          case PlantType.Bush:
+          {
+            let tmp: Bush = new Bush(new DateRange(sowedPlant.plantID.sowingSeasonStart, sowedPlant.plantID.sowingSeasonEnd), new DateRange(sowedPlant.plantID.yieldSeasonStart, sowedPlant.plantID.yieldSeasonEnd), sowedPlant.plantID.expectedYieldInkg, sowedPlant.plantID.name, sowedPlant.plantID.image, sowedPlant.plantID.icon)
+            tmp.id = sowedPlant.plantID._id
+            retVal.push(new SowedPlant(tmpPatch, tmp, new Date(sowedPlant.dateSowed), sowedPlant._id))
+            break;
+          }
+          case PlantType.Tree:
+          {
+            let tmp: Tree = new Tree(new DateRange(sowedPlant.plantID.sowingSeasonStart, sowedPlant.plantID.sowingSeasonEnd), new DateRange(sowedPlant.plantID.yieldSeasonStart, sowedPlant.plantID.yieldSeasonEnd), sowedPlant.plantID.expectedYieldInkg, sowedPlant.plantID.name, sowedPlant.plantID.image, sowedPlant.plantID.icon)
+            tmp.id = sowedPlant.plantID._id
+            retVal.push(new SowedPlant(tmpPatch, tmp, new Date(sowedPlant.dateSowed), sowedPlant._id))
+            break;
+          }
+        }
+      }
+    )})
     return retVal
   }
 }

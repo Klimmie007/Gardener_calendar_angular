@@ -6,7 +6,6 @@ export class User
     private email: string;
     private nickname: string;
     private password?: string;
-    private id?: number;
     //private isConfirmed: boolean;
     constructor(email: string, nickname: string, password: string)
     {

@@ -17,7 +17,6 @@ import { BackendService } from '../backend.service';
 import { Plant } from '../_models/plant';
 import { Bush } from '../_models/bush';
 import { Tree } from '../_models/tree';
-import * as e from 'express';
 
 @Component({
   selector: 'app-define-plant',
@@ -146,7 +145,7 @@ export class DefinePlantComponent implements OnInit {
   }
   public set expectedYield(value: number) {
     let valString = (value as unknown) as string
-    if(valString.length == 0)
+    if(valString == "")
     {
       this.expectedYieldError = "value cannot be empty"
     }

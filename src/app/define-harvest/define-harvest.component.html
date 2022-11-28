@@ -1,0 +1,19 @@
+<div>
+    <p>Create your harvest</p>
+    <form>
+      <label>Weight: </label>
+      <input placeholder="Input weight" type="text" name="weight" [(ngModel)]="weight"/><br>
+      <div class="error">{{this.Error}}</div>
+      <mat-checkbox class="example-margin" name="checkbox" [(ngModel)]="isToday" ng-model-options="{ getterSetter: true }">Harvested today?</mat-checkbox>
+      <div *ngIf="!isToday">
+        <mat-form-field appearance="fill">
+            <mat-label>Harvest Date</mat-label>
+            <pre></pre>
+              <input name="date" matInput disabled [matDatepicker]="picker" [(ngModel)]="harvestDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker disabled="false" #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+    </form>
+    <button (click)="defineHarvest()">Confirm harvest</button>
+  </div>

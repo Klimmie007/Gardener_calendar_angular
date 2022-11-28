@@ -39,7 +39,7 @@ export class Harvest{
 
     public toJSON(): Object
     {
-        return {weight: this._weight, plant: this._harvestedPlant.id, harvestDate: this._harvestDate}
+        return {weight: this._weight, harvestedPlant: this._harvestedPlant.id, harvestDate: this._harvestDate}
     }
 }
  

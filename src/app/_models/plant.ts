@@ -66,7 +66,7 @@ export class Plant implements IPlant
         this._sowingSeason = value
     }
     toJSON(): Object {
-        return {sowingSeasonStart: this.sowingSeason.start, sowingSeasonEnd: this.sowingSeason.end, minVegetationCycleInDays: this.minVegetationCycleInDays, maxVegetationCycleInDays: this.maxVegetationCycleInDays, name: this.name, icon: this.icon, image: this.image, type: PlantType.Plant}
+        return {expectedYieldInkg: this.expectedYieldInkg, sowingSeasonStart: this.sowingSeason.start, sowingSeasonEnd: this.sowingSeason.end, minVegetationCycleInDays: this.minVegetationCycleInDays, maxVegetationCycleInDays: this.maxVegetationCycleInDays, name: this.name, icon: this.icon, image: this.image, type: PlantType.Plant}
     }
     private _expectedYieldInkg: number
     public get expectedYieldInkg(): number {

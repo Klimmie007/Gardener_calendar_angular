@@ -28,6 +28,8 @@ export class DefineHarvestComponent implements OnInit{
   @Input('index')
   public set index(value: number) {
     this._index = value;
+    console.log(this.Crops[0])
+    
     this._weight = this.Crops[value].plant.expectedYieldInkg
   }
   private _harvestDate: Date = new Date();

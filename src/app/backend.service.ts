@@ -59,7 +59,7 @@ interface sowedPlantBackend{
 interface harvestBackend{
   _id: string,
   weight: number,
-  plant: IPlantBackend,
+  harvestedPlant: IPlantBackend,
   harvestDate: Date
 }
 
@@ -286,6 +286,7 @@ export class BackendService {
       res => console.log(res),
       err => console.log(err)
     )
+    console.log(harvest.toJSON())
     return this.http.put<Harvest>(this._harvestURL, harvest.toJSON());
   }
 
@@ -294,25 +295,26 @@ export class BackendService {
     this.http.get<Array<harvestBackend>>(this._harvestURL).subscribe(
       res => {
         res.forEach(plant => {
-          switch(plant.plant.type)
+          console.log(plant)
+          switch(plant.harvestedPlant.type)
         {
           case PlantType.Plant:
           {
-            let tmp: Plant = new Plant(new DateRange(plant.plant.sowingSeasonStart, plant.plant.sowingSeasonEnd), plant.plant.minVegetationCycleInDays, plant.plant.maxVegetationCycleInDays, plant.plant.expectedYieldInkg, plant.plant.name, plant.plant.image, plant.plant.icon)
+            let tmp: Plant = new Plant(new DateRange(plant.harvestedPlant.sowingSeasonStart, plant.harvestedPlant.sowingSeasonEnd), plant.harvestedPlant.minVegetationCycleInDays, plant.harvestedPlant.maxVegetationCycleInDays, plant.harvestedPlant.expectedYieldInkg, plant.harvestedPlant.name, plant.harvestedPlant.image, plant.harvestedPlant.icon)
             tmp.id = plant._id
             retVal.push(new Harvest(plant.weight, tmp, new Date(plant.harvestDate), plant._id))
             break;
           }
           case PlantType.Bush:
           {
-            let tmp: Bush = new Bush(new DateRange(plant.plant.sowingSeasonStart, plant.plant.sowingSeasonEnd), new DateRange(plant.plant.yieldSeasonStart, plant.plant.yieldSeasonEnd), plant.plant.expectedYieldInkg, plant.plant.name, plant.plant.image, plant.plant.icon)
+            let tmp: Bush = new Bush(new DateRange(plant.harvestedPlant.sowingSeasonStart, plant.harvestedPlant.sowingSeasonEnd), new DateRange(plant.harvestedPlant.yieldSeasonStart, plant.harvestedPlant.yieldSeasonEnd), plant.harvestedPlant.expectedYieldInkg, plant.harvestedPlant.name, plant.harvestedPlant.image, plant.harvestedPlant.icon)
             tmp.id = plant._id
             retVal.push(new Harvest(plant.weight, tmp, new Date(plant.harvestDate), plant._id))
             break;
           }
           case PlantType.Tree:
           {
-            let tmp: Tree = new Tree(new DateRange(plant.plant.sowingSeasonStart, plant.plant.sowingSeasonEnd), new DateRange(plant.plant.yieldSeasonStart, plant.plant.yieldSeasonEnd), plant.plant.expectedYieldInkg, plant.plant.name, plant.plant.image, plant.plant.icon)
+            let tmp: Tree = new Tree(new DateRange(plant.harvestedPlant.sowingSeasonStart, plant.harvestedPlant.sowingSeasonEnd), new DateRange(plant.harvestedPlant.yieldSeasonStart, plant.harvestedPlant.yieldSeasonEnd), plant.harvestedPlant.expectedYieldInkg, plant.harvestedPlant.name, plant.harvestedPlant.image, plant.harvestedPlant.icon)
             tmp.id = plant._id
             retVal.push(new Harvest(plant.weight, tmp, new Date(plant.harvestDate), plant._id))
             break;

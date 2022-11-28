@@ -296,7 +296,6 @@ router.get('/plant/date/sow', (req, res) => {
 router.put('/sowedPlant', (req, res) => {
     let sowedPlantData = req.body
     let sowedPlant = new SowedPlant(sowedPlantData)
-
     sowedPlant.save((error, newSowedPlant) => {
         if(error || !newSowedPlant){
             res.status(400).send("what the fuck")
@@ -342,7 +341,7 @@ router.put('/harvest', (req, res) => {
 
 router.get('/harvest', async (req, res) => {
     try {
-        const data = await Harvest.find().populate("plant");
+        const data = await Harvest.find().populate("harvestedPlant");
         res.json(data);
       }
       catch(error) {

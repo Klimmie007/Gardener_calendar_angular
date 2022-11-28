@@ -3,11 +3,17 @@
   <ul *ngFor="let forecast of WeatherData">
     <li class="main">
       {{ forecast.dt_txt | date: "EEE, MM dd" }}
-      <span>
+      <span *ngIf="!changeTemp">
         Min: {{ forecast.main.temp_min | number: "1.0-0" }} °C
       </span>
-      <span>
+      <span *ngIf="!changeTemp">
         Max: {{ forecast.main.temp_max | number: "1.0-0" }} °C
+      </span>
+      <span *ngIf="changeTemp">
+        Min: {{ forecast.main.temp_min | fahrenheit }} °F
+      </span>
+      <span *ngIf="changeTemp">
+        Max: {{ forecast.main.temp_max | fahrenheit }} °F
       </span>
       <span>
         {{ forecast.weather[0].main }}

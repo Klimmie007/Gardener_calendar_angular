@@ -36,6 +36,7 @@ import { HarvestComponent } from './harvest/harvest.component';
 import { DefineHarvestComponent } from './define-harvest/define-harvest.component';
 import { CropsComponent } from './crops/crops.component';
 import { ProperDayComponent } from './proper-day/proper-day.component';
+import { FahrenheitPipe } from './fahrenheit.pipe';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ProperDayComponent } from './proper-day/proper-day.component';
     HarvestComponent,
     DefineHarvestComponent,
     CropsComponent,
-    ProperDayComponent
+    ProperDayComponent,
+    FahrenheitPipe,
   ],
   imports: [
     FormsModule,

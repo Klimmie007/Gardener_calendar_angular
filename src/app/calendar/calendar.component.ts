@@ -30,6 +30,28 @@ export class CalendarComponent implements OnInit {
   public set sowedPlants(value: SowedPlant[]) {
     this._sowedPlants = value;
   }
+  private celsius: boolean = true;
+  private fahrenheit: boolean = false;
+
+  get Celsius(): boolean {
+    return this.celsius;
+  }
+
+  get Fahrenheit(): boolean {
+    return this.fahrenheit;
+  }
+
+  changeTemp() {
+    if(this.celsius && !this.fahrenheit) {
+      this.celsius = false;
+      this.fahrenheit = true;
+    }
+    else {
+      this.celsius = true;
+      this.fahrenheit = false;
+    }
+  }
+
   public get Years(): number[] {
     return this._Years;
   }

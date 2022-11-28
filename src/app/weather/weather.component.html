@@ -5,12 +5,20 @@
   <div>
     {{ Location.name }}, {{Location.country}}
   </div>
-  <div>
+  <div *ngIf="!changeTemp">
     <h3>Temperature: {{WeatherNow.main.temp | number: '1.0-0'}} °C</h3>
   </div>
+  <div *ngIf="changeTemp">
+    <h3>Temperature: {{WeatherNow.main.temp | fahrenheit}} °F</h3>
+  </div>
   <div>
-    <div>
+    <div *ngIf="!changeTemp">
       Feels like {{WeatherNow.main.feels_like | number: '1.0-0'}} °C.
+      {{WeatherNow.weather[0].main}}.
+      {{WeatherNow.weather[0].description | titlecase}}.
+    </div>
+    <div *ngIf="changeTemp">
+      Feels like {{WeatherNow.main.feels_like | fahrenheit}} °F.
       {{WeatherNow.weather[0].main}}.
       {{WeatherNow.weather[0].description | titlecase}}.
     </div>

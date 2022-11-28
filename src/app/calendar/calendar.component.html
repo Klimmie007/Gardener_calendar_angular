@@ -13,6 +13,11 @@
     </table>
     <button (click)="genNext()">Next</button>
 </div>
-<app-weather></app-weather>
-<app-future-weather></app-future-weather>
+<hr>
+<div>
+  <button *ngIf="Celsius" (click)="changeTemp()">Change to Fahrenheit</button>
+  <button *ngIf="Fahrenheit" (click)="changeTemp()">Change to Celsius</button>
+  <app-weather [changeTemp]="Fahrenheit"></app-weather>
+  <app-future-weather [changeTemp]="Fahrenheit"></app-future-weather>
+</div>
 
